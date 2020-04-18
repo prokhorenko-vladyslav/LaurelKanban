@@ -9,6 +9,8 @@ use Laurel\Kanban\Http\Controllers\CardController;
 
 class KanbanProvider extends ServiceProvider
 {
+    protected $namespace = 'Laurel\Kanban\Http\Controllers';
+
     /**
      * Bootstrap services.
      *
