@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 //middleware('auth:api')->
 Route::prefix('api')->namespace('Laurel\Kanban\Http\Controllers')->group(function () {
-    Route::resource('desk', 'DeskController');
+    Route::apiResource('desk', 'DeskController');
 });

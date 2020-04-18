@@ -21,7 +21,7 @@ class KanbanProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . "/../routes/api.php");
         $this->loadMigrationsFrom(__DIR__ . "/../database/migrations");
         $this->publishes([
-            __DIR__ . "/../config/laurel.kanban.php" => config_path('laurel.kanban.php')
+            __DIR__ . "/../config/laurel_kanban.php" => config_path('laurel_kanban.php')
         ]);
     }
 
