@@ -31,14 +31,19 @@ class DeskController extends Controller
         return (bool)$desk->save();
     }
 
-    public function update(DeskUpdate $request, Desk $desk)
+    public function update(DeskUpdate $request, int $deskId)
     {
-        $desk->fill($request->validated());
-        $desk->user_id = 1;
-        return (bool)$desk->save();
+        try {
+            $desk = Desk::findOrFail($deskId);
+            $desk->fill($request->validated());
+            $desk->user_id = 1;
+            return (bool)$desk->save();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
     }
 
-    public function destroy(DeskDestroy $request, $deskId)
+    public function destroy(DeskDestroy $request, int $deskId)
     {
         return (bool)Desk::findOrFail($deskId)->delete();
     }

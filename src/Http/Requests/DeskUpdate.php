@@ -35,4 +35,17 @@ class DeskUpdate extends FormRequest
             'is_private' => 'boolean'
         ];
     }
+
+    /**
+     *  Filters to be applied to the input.
+     *
+     * @return array
+     */
+    public function filters()
+    {
+        return [
+            'name' => 'trim|escape',
+            'description' => 'trim|escape'
+        ];
+    }
 }
