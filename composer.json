@@ -1,0 +1,14 @@
+{
+    "name": "laurel/kanban",
+    "description": "Simple laravel kanban",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Prokhorenko Vladyslav",
+            "email": "random.person.1907@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
