@@ -25,16 +25,18 @@ class DeskController extends Controller
 
     public function store(DeskStore $request)
     {
-        dd($request->validated());
+        $desk = new Desk;
+        $desk->fill($request->validated());
+        $desk->user_id = 1;
+        return (bool)$desk->save();
     }
 
-    public function update(DeskUpdate $request, $deskId)
+    public function update(DeskUpdate $request, Desk $desk)
     {
-        dd($request->validated());
     }
 
     public function destroy(DeskDestroy $request, $deskId)
     {
-        return Desk::findOrFail($deskId)->delete();
+        return (bool)Desk::findOrFail($deskId)->delete();
     }
 }
