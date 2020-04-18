@@ -13,7 +13,7 @@ class DeskStore extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class DeskStore extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string:255',
+            'description' => 'string:1000',
+            'is_favorite' => 'boolean',
+            'is_private' => 'boolean'
         ];
     }
 }

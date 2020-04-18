@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Laurel\Kanban\Http\Controllers\DeskController;
 use Laurel\Kanban\Http\Controllers\CollumnController;
 use Laurel\Kanban\Http\Controllers\CardController;
+use Laurel\Kanban\Kanban;
 
 class KanbanProvider extends ServiceProvider
 {
@@ -18,7 +19,6 @@ class KanbanProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__ . "/../routes/api.php");
         $this->loadMigrationsFrom(__DIR__ . "/../database/migrations");
         $this->publishes([
             __DIR__ . "/../config/laurel_kanban.php" => config_path('laurel_kanban.php')

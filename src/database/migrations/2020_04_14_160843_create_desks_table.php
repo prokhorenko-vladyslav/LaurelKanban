@@ -15,8 +15,8 @@ class CreateDesksTable extends Migration
     {
         Schema::create('desks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
+            $table->string('name', 255);
+            $table->text('description', 1000);
             $table->boolean('is_favorite')->default(false);
             $table->boolean('is_private')->default(true);
             $table->foreignId('user_id');

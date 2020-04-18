@@ -3,6 +3,7 @@
 namespace Laurel\Kanban;
 
 use App\Models\Desk;
+use Illuminate\Support\ServiceProvider;
 
 class Kanban
 {
@@ -13,13 +14,13 @@ class Kanban
     {
     }
 
-    public static function getInstance() : self
+    public static function instance() : self
     {
-        if (!$this->instance) {
-            $this->instance = new self;
+        if (!self::$instance) {
+            self::$instance = new self;
         }
 
-        return $this->instance;
+        return self::$instance;
     }
 
     public function setCurrentDesk(Desk $desk) : self
@@ -31,5 +32,12 @@ class Kanban
     public function getCurrentDesk() : Desk
     {
         return $this->currentDesk;
+    }
+
+    public static function routesApi()
+    {
+        if (! app()->routesAreCached()) {
+            require __DIR__ . '/routes/api.php';
+        }
     }
 }
