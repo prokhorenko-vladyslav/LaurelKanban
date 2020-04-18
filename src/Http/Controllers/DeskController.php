@@ -33,6 +33,9 @@ class DeskController extends Controller
 
     public function update(DeskUpdate $request, Desk $desk)
     {
+        $desk->fill($request->validated());
+        $desk->user_id = 1;
+        return (bool)$desk->save();
     }
 
     public function destroy(DeskDestroy $request, $deskId)

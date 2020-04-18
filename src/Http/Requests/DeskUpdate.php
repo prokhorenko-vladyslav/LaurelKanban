@@ -3,6 +3,7 @@
 namespace Laurel\Kanban\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DeskUpdate extends FormRequest
 {
@@ -24,10 +25,14 @@ class DeskUpdate extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|unique:desks,name|string:255',
-            // 'description' => 'string:1000',
-            // 'is_favorite' => 'boolean',
-            // 'is_private' => 'boolean'
+            'name' => [
+                'required',
+                'string:255',
+                Rule::unique('desks', 'name')->ignore($this->desk),
+            ],
+            'description' => 'string:1000',
+            'is_favorite' => 'boolean',
+            'is_private' => 'boolean'
         ];
     }
 }
