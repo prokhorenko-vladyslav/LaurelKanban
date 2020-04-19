@@ -4,9 +4,8 @@ namespace Laurel\Kanban\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Laurel\Kanban\Kanban;
-use Laurel\Kanban\Http\Resources\CollumnResource;
 
-class DeskResource extends JsonResource
+class CardResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,10 +18,7 @@ class DeskResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
-            'is_favorite' => $this->is_favorite,
-            'is_private' => $this->is_private,
-            'collumns' => CollumnResource::collection($this->whenLoaded('collumns'))
+            'order' => $this->order,
         ];
     }
 }

@@ -16,8 +16,10 @@ class CollumnResource extends JsonResource
     public function toArray($request)
     {
         return [
-            /*'name' => $this->name,
-            'cards' => $this->cards()->get()*/
+            'id' => $this->id,
+            'name' => $this->name,
+            'order' => $this->order,
+            'cards' => CardResource::collection($this->whenLoaded('cards'))
         ];
     }
 }

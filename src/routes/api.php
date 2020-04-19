@@ -36,4 +36,6 @@ Route::prefix('kanban')->namespace('\Laurel\Kanban\Http\Controllers')->group(fun
         ]);
 
     Route::apiResource('desk', 'DeskController');
+
+    Route::apiResource('desk/{desk}/collumn', 'CollumnController');
 });
