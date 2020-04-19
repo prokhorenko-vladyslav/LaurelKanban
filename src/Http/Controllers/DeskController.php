@@ -9,6 +9,7 @@ use Laurel\Kanban\Http\Requests\DeskIndex;
 use Laurel\Kanban\Http\Requests\DeskStore;
 use Laurel\Kanban\Http\Requests\DeskUpdate;
 use Laurel\Kanban\Http\Requests\DeskDestroy;
+use Laurel\Kanban\Http\Requests\DeskSetFavorite;
 use Laurel\Kanban\Models\Desk;
 
 class DeskController extends Controller
@@ -46,5 +47,16 @@ class DeskController extends Controller
     public function destroy(DeskDestroy $request, int $deskId)
     {
         return (bool)Desk::findOrFail($deskId)->delete();
+    }
+
+    public function favorite(DeskSetFavorite $request, int $deskId)
+    {
+        try {
+            $desk = Desk::findOrFail($deskId);
+            $desk->favorite();
+            return (bool)$desk->save();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
     }
 }

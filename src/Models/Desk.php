@@ -20,4 +20,10 @@ class Desk extends Model
     {
         return $this->hasMany(Card::class);
     }
+
+    public function favorite()
+    {
+        $this->is_favorite = true;
+        return $this;
+    }
 }
