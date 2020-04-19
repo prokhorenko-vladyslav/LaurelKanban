@@ -9,6 +9,7 @@ use Laurel\Kanban\Http\Requests\CardShow;
 use Laurel\Kanban\Http\Requests\CardIndex;
 use Laurel\Kanban\Http\Requests\CardStore;
 use Laurel\Kanban\Http\Requests\CardUpdate;
+use Laurel\Kanban\Http\Requests\CardDestroy;
 use Laurel\Kanban\Http\Resources\CardResource;
 use Laurel\Kanban\Http\Resources\CardShortResource;
 use Laurel\Kanban\Models\Desk;
@@ -63,6 +64,17 @@ class CardController extends Controller
             }
             $card->user()->associate(Auth::user());
             return (bool)$card->save();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
+    }
+
+    public function destroy(CardDestroy $request, int $deskId, $cardId)
+    {
+        try {
+            $desk = Desk::findOrFail($deskId);
+            $card = $desk->cards()->findOrFail($deskId);
+            return (bool)$card->delete();
         } catch (\Exception $e) {
             return response('', 404);
         }
