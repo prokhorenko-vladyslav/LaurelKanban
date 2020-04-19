@@ -54,7 +54,16 @@ class DeskController extends Controller
 
     public function destroy(DeskDestroy $request, int $deskId)
     {
-        return (bool)Desk::findOrFail($deskId)->delete();
+        try {
+            $desk = Desk::findOrFail($deskId);
+            $desk->collumns()->each(function ($collumn) {
+                $collumn->cards()->delete();
+                $collumn->delete();
+            });
+            return (bool)$desk->delete();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
     }
 
     public function favorite(DeskSetFavorite $request, int $deskId)

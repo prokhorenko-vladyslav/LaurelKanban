@@ -41,5 +41,5 @@ Route::prefix('kanban')->namespace('\Laurel\Kanban\Http\Controllers')->group(fun
             'uses' => 'CollumnController@reorder',
             'as' => 'collumn.reorder'
         ]);
-    Route::apiResource('desk/{desk}/collumn', 'CollumnController');
+    Route::apiResource('desk.collumn', 'CollumnController');
 });

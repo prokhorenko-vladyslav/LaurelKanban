@@ -18,8 +18,7 @@ class CreateCardsTable extends Migration
             $table->string('name');
             $table->text('description');
             $table->integer('order');
-            $table->foreignId('collumn_id');
-            $table->softDeletes();
+            $table->foreignId('collumn_id')->nullable();
             $table->timestamps();
         });
     }

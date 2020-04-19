@@ -17,8 +17,7 @@ class CreateCollumnsTable extends Migration
             $table->id();
             $table->string('name');
             $table->integer('order')->default(0);
-            $table->foreignId('desk_id');
-            $table->softDeletes();
+            $table->foreignId('desk_id')->nullable();
             $table->timestamps();
         });
     }

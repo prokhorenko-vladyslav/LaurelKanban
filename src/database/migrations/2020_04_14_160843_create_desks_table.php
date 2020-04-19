@@ -19,8 +19,7 @@ class CreateDesksTable extends Migration
             $table->text('description', 1000)->nullable();
             $table->boolean('is_favorite')->default(false);
             $table->boolean('is_private')->default(true);
-            $table->foreignId('user_id');
-            $table->softDeletes();
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }
