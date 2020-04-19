@@ -24,7 +24,8 @@ class CollumnReorder extends FormRequest
     public function rules()
     {
         return [
-            'order' => 'required|numeric|min:0'
-        ];
+             'order' => 'required|array',
+             'order.*' => 'required|numeric|min:0'
+         ];
     }
 }

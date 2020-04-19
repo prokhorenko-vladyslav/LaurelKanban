@@ -72,12 +72,18 @@ class CollumnController extends Controller
         }
     }
 
-    public function reorder(CollumnReorder $request, int $deskId, int $collumnId)
+    public function reorder(CollumnReorder $request, int $deskId)
     {
         try {
-            $collumn = Desk::findOrFail($deskId)->collumns()->findOrFail($collumnId);
-            $collumn->setOrder($request->validated()['order']);
-            return (bool)$collumn->save();
+            $desk = Desk::findOrFail($deskId);
+            foreach ($request->validated()['order'] as $collumnId => $order) {
+                $collumn = $desk->collumns()->find($collumnId);
+                if ($collumn) {
+                    $collumn->order = $order;
+                    $collumn->save();
+                }
+            }
+            return true;
         } catch (\Exception $e) {
             return response('', 404);
         }
