@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Laurel\Kanban\Http\Requests\CollumnIndex;
 use Laurel\Kanban\Http\Requests\CollumnStore;
 use Laurel\Kanban\Http\Requests\CollumnUpdate;
+use Laurel\Kanban\Http\Requests\CollumnDestroy;
 use Laurel\Kanban\Http\Requests\CollumnShow;
 use Laurel\Kanban\Http\Resources\CollumnResource;
 use Laurel\Kanban\Models\Desk;
@@ -54,6 +55,17 @@ class CollumnController extends Controller
             $collumn = Collumn::findOrFail($collumnId);
             $collumn->fill($request->validated());
             return (bool)$collumn->save();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
+    }
+
+    public function destroy(CollumnDestroy $request, int $deskId, int $collumnId)
+    {
+        try {
+            $collumn = Desk::findOrFail($deskId)->collumns()->findOrFail($collumnId);
+            $collumn->cards()->delete();
+            return (bool)$collumn->delete();
         } catch (\Exception $e) {
             return response('', 404);
         }

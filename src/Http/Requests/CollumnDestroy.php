@@ -4,7 +4,7 @@ namespace Laurel\Kanban\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CollumnDelete extends FormRequest
+class CollumnDestroy extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CollumnDelete extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
