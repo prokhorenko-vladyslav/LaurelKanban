@@ -3,6 +3,7 @@
 namespace Laurel\Kanban\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Laurel\Kanban\Http\Requests\CollumnIndex;
 use Laurel\Kanban\Http\Requests\CollumnStore;
@@ -11,15 +12,15 @@ use Laurel\Kanban\Http\Requests\CollumnDestroy;
 use Laurel\Kanban\Http\Requests\CollumnReorder;
 use Laurel\Kanban\Http\Requests\CollumnShow;
 use Laurel\Kanban\Http\Resources\CollumnResource;
-use Laurel\Kanban\Models\Desk;
 use Laurel\Kanban\Models\Collumn;
+use Laurel\Kanban\Kanban;
 
 class CollumnController extends Controller
 {
     public function index(CollumnIndex $request, int $deskId)
     {
         try {
-            $collumns = Desk::findOrFail($deskId)->collumns()->with('cards')->get();
+            $collumns = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->with('cards')->get();
         } catch (\Exception $e) {
             $collumns = [];
         }
@@ -30,7 +31,7 @@ class CollumnController extends Controller
     {
         try {
             return new CollumnResource(
-                Desk::findOrFail($deskId)->collumns()->with('cards')->findOrFail($deskId)
+                Kanban::getUserDesks()->findOrFail($deskId)->collumns()->with('cards')->findOrFail($deskId)
             );
         } catch (\Exception $e) {
             return response('', 404);
@@ -40,7 +41,7 @@ class CollumnController extends Controller
     public function store(CollumnStore $request, int $deskId)
     {
         try {
-            $desk = Desk::findOrFail($deskId);
+            $desk = Kanban::getUserDesks()->findOrFail($deskId);
             $collumn = new Collumn;
             $collumn->fill($request->validated());
             $collumn->desk()->associate($desk);
@@ -53,7 +54,7 @@ class CollumnController extends Controller
     public function update(CollumnUpdate $request, int $deskId, int $collumnId)
     {
         try {
-            $collumn = Desk::findOrFail($deskId)->collumns()->findOrFail($collumnId);
+            $collumn = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->findOrFail($collumnId);
             $collumn->fill($request->validated());
             return (bool)$collumn->save();
         } catch (\Exception $e) {
@@ -64,7 +65,7 @@ class CollumnController extends Controller
     public function destroy(CollumnDestroy $request, int $deskId, int $collumnId)
     {
         try {
-            $collumn = Desk::findOrFail($deskId)->collumns()->findOrFail($collumnId);
+            $collumn = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->findOrFail($collumnId);
             $collumn->cards()->delete();
             return (bool)$collumn->delete();
         } catch (\Exception $e) {
@@ -75,7 +76,7 @@ class CollumnController extends Controller
     public function reorder(CollumnReorder $request, int $deskId)
     {
         try {
-            $desk = Desk::findOrFail($deskId);
+            $desk = Kanban::getUserDesks()->findOrFail($deskId);
             foreach ($request->validated()['order'] as $collumnId => $order) {
                 $collumn = $desk->collumns()->find($collumnId);
                 if ($collumn) {

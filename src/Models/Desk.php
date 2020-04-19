@@ -3,7 +3,6 @@
 namespace Laurel\Kanban\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Desk extends Model
 {
@@ -17,6 +16,11 @@ class Desk extends Model
     public function cards()
     {
         return $this->hasManyThrough(Card::class, Collumn::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(config('laurel_kanban.user_class'), 'user_id');
     }
 
     public function favorite()

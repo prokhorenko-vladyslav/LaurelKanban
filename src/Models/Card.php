@@ -3,7 +3,6 @@
 namespace Laurel\Kanban\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
 
 class Card extends Model
 {
@@ -21,6 +20,6 @@ class Card extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(config('laurel_kanban.user_class'), 'user_id');
     }
 }

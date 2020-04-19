@@ -18,13 +18,8 @@ class Collumn extends Model
         return $this->hasMany(Card::class);
     }
 
-    public function setOrder(int $order)
+    public function user()
     {
-        if ($order < 0) {
-            throw new Exception('Order must be more or equal 0');
-        }
-
-        $this->order = $order;
-        return $this;
+        return $this->belongsTo(config('laurel_kanban.user_class'), 'user_id');
     }
 }

@@ -13,7 +13,7 @@ use Laurel\Kanban\Http\Requests\CardDestroy;
 use Laurel\Kanban\Http\Requests\CardReorder;
 use Laurel\Kanban\Http\Resources\CardResource;
 use Laurel\Kanban\Http\Resources\CardShortResource;
-use Laurel\Kanban\Models\Desk;
+use Laurel\Kanban\Kanban;
 use Laurel\Kanban\Models\Card;
 
 class CardController extends Controller
@@ -21,7 +21,7 @@ class CardController extends Controller
     public function index(CardIndex $request, int $deskId)
     {
         try {
-            $cards = Desk::findOrFail($deskId)->cards()->get();
+            $cards = Kanban::getUserDesks()->findOrFail($deskId)->cards()->get();
         } catch (\Exception $e) {
             $cards = [];
         }
@@ -32,7 +32,7 @@ class CardController extends Controller
     {
         try {
             return new CardResource(
-                Desk::findOrFail($deskId)->cards()->findOrFail($cardId)
+                Kanban::getUserDesks()->findOrFail($deskId)->cards()->findOrFail($cardId)
             );
         } catch (\Exception $e) {
             return response('', 404);
@@ -42,7 +42,7 @@ class CardController extends Controller
     public function store(CardStore $request, int $deskId)
     {
         try {
-            $collumn = Desk::findOrFail($deskId)->collumns()->findOrFail($request->validated()['collumn_id']);
+            $collumn = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->findOrFail($request->validated()['collumn_id']);
             $card = new Card;
             $card->fill($request->validated());
             $card->collumn()->associate($collumn);
@@ -56,11 +56,11 @@ class CardController extends Controller
     public function update(CardUpdate $request, int $deskId, $cardId)
     {
         try {
-            $desk = Desk::findOrFail($deskId);
+            $desk = Kanban::getUserDesks()->findOrFail($deskId);
             $card = $desk->cards()->findOrFail($deskId);
             $card->fill($request->validated());
             if (isset($request->validated()['collumn_id'])) {
-                $collumn = Desk::findOrFail($deskId)->collumns()->findOrFail($request->validated()['collumn_id']);
+                $collumn = $desk->collumns()->findOrFail($request->validated()['collumn_id']);
                 $card->collumn()->associate($collumn);
             }
             $card->user()->associate(Auth::user());
@@ -73,7 +73,7 @@ class CardController extends Controller
     public function destroy(CardDestroy $request, int $deskId, $cardId)
     {
         try {
-            $desk = Desk::findOrFail($deskId);
+            $desk = Kanban::getUserDesks()->findOrFail($deskId);
             $card = $desk->cards()->findOrFail($deskId);
             return (bool)$card->delete();
         } catch (\Exception $e) {
@@ -84,7 +84,7 @@ class CardController extends Controller
     public function reorder(CardReorder $request, int $deskId, int $collumnId)
     {
         try {
-            $collumn = Desk::findOrFail($deskId)->collumns()->findOrFail($collumnId);
+            $collumn = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->findOrFail($collumnId);
             foreach ($request->validated()['order'] as $cardId => $order) {
                 $card = $collumn->cards()->find($cardId);
                 if ($card) {

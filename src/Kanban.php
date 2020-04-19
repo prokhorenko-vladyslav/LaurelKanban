@@ -4,6 +4,7 @@ namespace Laurel\Kanban;
 
 use Laurel\Kanban\Models\Desk;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class Kanban
 {
@@ -27,5 +28,10 @@ class Kanban
         if (! app()->routesAreCached()) {
             require __DIR__ . '/routes/api.php';
         }
+    }
+
+    public static function getUserDesks()
+    {
+        return Desk::where('user_id', Auth::id());
     }
 }
