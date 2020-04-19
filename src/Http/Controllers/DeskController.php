@@ -10,6 +10,7 @@ use Laurel\Kanban\Http\Requests\DeskStore;
 use Laurel\Kanban\Http\Requests\DeskUpdate;
 use Laurel\Kanban\Http\Requests\DeskDestroy;
 use Laurel\Kanban\Http\Requests\DeskSetFavorite;
+use Laurel\Kanban\Http\Requests\DeskSetPrivate;
 use Laurel\Kanban\Models\Desk;
 
 class DeskController extends Controller
@@ -71,11 +72,22 @@ class DeskController extends Controller
         }
     }
 
-    public function private(DeskSetFavorite $request, int $deskId)
+    public function private(DeskSetPrivate $request, int $deskId)
     {
         try {
             $desk = Desk::findOrFail($deskId);
             $desk->private();
+            return (bool)$desk->save();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
+    }
+
+    public function public(DeskSetPrivate $request, int $deskId)
+    {
+        try {
+            $desk = Desk::findOrFail($deskId);
+            $desk->public();
             return (bool)$desk->save();
         } catch (\Exception $e) {
             return response('', 404);

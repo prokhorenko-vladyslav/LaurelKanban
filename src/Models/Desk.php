@@ -38,4 +38,10 @@ class Desk extends Model
         $this->is_private = true;
         return $this;
     }
+
+    public function public()
+    {
+        $this->is_private = false;
+        return $this;
+    }
 }

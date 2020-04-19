@@ -5,7 +5,7 @@ namespace Laurel\Kanban\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class DeskSetFavorite extends FormRequest
+class DeskSetPrivate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class DeskSetFavorite extends FormRequest
     public function rules()
     {
         return [
-            
+
         ];
     }
 }
