@@ -32,4 +32,10 @@ class Desk extends Model
         $this->is_favorite = false;
         return $this;
     }
+
+    public function private()
+    {
+        $this->is_private = true;
+        return $this;
+    }
 }

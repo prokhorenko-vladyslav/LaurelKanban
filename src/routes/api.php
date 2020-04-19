@@ -24,5 +24,10 @@ Route::prefix('kanban')->namespace('\Laurel\Kanban\Http\Controllers')->group(fun
             'uses' => 'DeskController@unfavorite',
             'as' => 'desk.unfavorite'
         ]);
+
+    Route::match(['PUT', 'PATCH'], 'desk/{desk}/private', [
+            'uses' => 'DeskController@private',
+            'as' => 'desk.private'
+        ]);
     Route::apiResource('desk', 'DeskController');
 });

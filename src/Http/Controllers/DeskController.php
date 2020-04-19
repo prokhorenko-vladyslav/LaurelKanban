@@ -70,4 +70,15 @@ class DeskController extends Controller
             return response('', 404);
         }
     }
+
+    public function private(DeskSetFavorite $request, int $deskId)
+    {
+        try {
+            $desk = Desk::findOrFail($deskId);
+            $desk->private();
+            return (bool)$desk->save();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
+    }
 }
