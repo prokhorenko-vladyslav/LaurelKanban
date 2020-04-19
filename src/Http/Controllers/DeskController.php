@@ -14,6 +14,7 @@ use Laurel\Kanban\Http\Requests\DeskSetPrivate;
 use Laurel\Kanban\Http\Resources\DeskResource;
 use Laurel\Kanban\Http\Resources\DeskCollection;
 use Laurel\Kanban\Models\Desk;
+use Laurel\Kanban\Kanban;
 
 class DeskController extends Controller
 {
@@ -24,7 +25,11 @@ class DeskController extends Controller
 
     public function show(DeskShow $request, $deskId)
     {
-        return new DeskResource(Desk::findOrFail($deskId)->load('collumns'));
+        try {
+            return new DeskResource(Desk::findOrFail($deskId)->load('collumns'));
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
     }
 
     public function store(DeskStore $request)

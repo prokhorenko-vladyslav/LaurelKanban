@@ -2,13 +2,12 @@
 
 namespace Laurel\Kanban;
 
-use App\Models\Desk;
+use Laurel\Kanban\Models\Desk;
 use Illuminate\Support\ServiceProvider;
 
 class Kanban
 {
     private static $instance = null;
-    private $currentDesk;
 
     private function __construct()
     {
@@ -21,17 +20,6 @@ class Kanban
         }
 
         return self::$instance;
-    }
-
-    public function setCurrentDesk(Desk $desk) : self
-    {
-        $this->desk = $desk;
-        return $this;
-    }
-
-    public function getCurrentDesk() : Desk
-    {
-        return $this->currentDesk;
     }
 
     public static function routesApi()
