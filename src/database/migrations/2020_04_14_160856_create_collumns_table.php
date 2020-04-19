@@ -16,7 +16,7 @@ class CreateCollumnsTable extends Migration
         Schema::create('collumns', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('order');
+            $table->integer('order')->default(0);
             $table->foreignId('desk_id');
             $table->softDeletes();
             $table->timestamps();

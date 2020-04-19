@@ -24,8 +24,8 @@ class DeskStore extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:desks,name|string:255',
-            'description' => 'string:1000',
+            'name' => 'required|unique:desks,name|string|max:255',
+            'description' => 'string|max:1000',
             'is_favorite' => 'boolean',
             'is_private' => 'boolean'
         ];

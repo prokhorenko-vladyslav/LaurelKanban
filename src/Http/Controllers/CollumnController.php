@@ -5,9 +5,11 @@ namespace Laurel\Kanban\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Laurel\Kanban\Http\Requests\CollumnIndex;
+use Laurel\Kanban\Http\Requests\CollumnStore;
 use Laurel\Kanban\Http\Requests\CollumnShow;
 use Laurel\Kanban\Http\Resources\CollumnResource;
 use Laurel\Kanban\Models\Desk;
+use Laurel\Kanban\Models\Collumn;
 
 class CollumnController extends Controller
 {
@@ -27,6 +29,19 @@ class CollumnController extends Controller
             return new CollumnResource(
                 Desk::findOrFail($deskId)->collumns()->with('cards')->findOrFail($deskId)
             );
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
+    }
+
+    public function store(CollumnStore $request, int $deskId)
+    {
+        try {
+            $desk = Desk::findOrFail($deskId);
+            $collumn = new Collumn;
+            $collumn->fill($request->validated());
+            $collumn->desk()->associate($desk);
+            return (bool)$collumn->save();
         } catch (\Exception $e) {
             return response('', 404);
         }

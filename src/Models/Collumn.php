@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Collumn extends Model
 {
+    protected $fillable = ['name', 'order'];
+
     public function desk()
     {
-        return $this->belongTo(Desk::class);
+        return $this->belongsTo(Desk::class);
     }
 
     public function cards()
