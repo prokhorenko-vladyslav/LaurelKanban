@@ -11,18 +11,20 @@ use Laurel\Kanban\Http\Requests\DeskUpdate;
 use Laurel\Kanban\Http\Requests\DeskDestroy;
 use Laurel\Kanban\Http\Requests\DeskSetFavorite;
 use Laurel\Kanban\Http\Requests\DeskSetPrivate;
+use Laurel\Kanban\Http\Resources\DeskResource;
+use Laurel\Kanban\Http\Resources\DeskCollection;
 use Laurel\Kanban\Models\Desk;
 
 class DeskController extends Controller
 {
     public function index(DeskIndex $request)
     {
-        return Desk::paginate(config('laurel_kanban.desk.page_count'));
+        return DeskResource::collection(Desk::paginate(config('laurel_kanban.desk.page_count')));
     }
 
     public function show(DeskShow $request, $deskId)
     {
-        return Desk::findOrFail($deskId);
+        return new DeskResource(Desk::findOrFail($deskId)->load('collumns'));
     }
 
     public function store(DeskStore $request)

@@ -34,5 +34,6 @@ Route::prefix('kanban')->namespace('\Laurel\Kanban\Http\Controllers')->group(fun
             'uses' => 'DeskController@public',
             'as' => 'desk.public'
         ]);
+
     Route::apiResource('desk', 'DeskController');
 });
