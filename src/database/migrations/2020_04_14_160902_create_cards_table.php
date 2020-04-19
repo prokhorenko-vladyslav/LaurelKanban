@@ -16,9 +16,10 @@ class CreateCardsTable extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->integer('order');
+            $table->text('description')->nullable();
+            $table->integer('order')->default(0);
             $table->foreignId('collumn_id')->nullable();
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }

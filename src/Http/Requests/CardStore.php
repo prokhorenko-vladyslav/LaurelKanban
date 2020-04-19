@@ -13,7 +13,7 @@ class CardStore extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class CardStore extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:60000',
+            'order' => 'numeric|min:0',
+            'collumn_id' => 'required|numeric|exists:collumns,id'
         ];
     }
 }
