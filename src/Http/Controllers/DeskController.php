@@ -59,4 +59,15 @@ class DeskController extends Controller
             return response('', 404);
         }
     }
+
+    public function unfavorite(DeskSetFavorite $request, int $deskId)
+    {
+        try {
+            $desk = Desk::findOrFail($deskId);
+            $desk->unfavorite();
+            return (bool)$desk->save();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
+    }
 }

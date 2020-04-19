@@ -26,4 +26,10 @@ class Desk extends Model
         $this->is_favorite = true;
         return $this;
     }
+
+    public function unfavorite()
+    {
+        $this->is_favorite = false;
+        return $this;
+    }
 }
