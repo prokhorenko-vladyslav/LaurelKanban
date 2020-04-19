@@ -10,6 +10,7 @@ use Laurel\Kanban\Http\Requests\CardIndex;
 use Laurel\Kanban\Http\Requests\CardStore;
 use Laurel\Kanban\Http\Requests\CardUpdate;
 use Laurel\Kanban\Http\Requests\CardDestroy;
+use Laurel\Kanban\Http\Requests\CardReorder;
 use Laurel\Kanban\Http\Resources\CardResource;
 use Laurel\Kanban\Http\Resources\CardShortResource;
 use Laurel\Kanban\Models\Desk;
@@ -75,6 +76,23 @@ class CardController extends Controller
             $desk = Desk::findOrFail($deskId);
             $card = $desk->cards()->findOrFail($deskId);
             return (bool)$card->delete();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
+    }
+
+    public function reorder(CardReorder $request, int $deskId, int $collumnId)
+    {
+        try {
+            $collumn = Desk::findOrFail($deskId)->collumns()->findOrFail($collumnId);
+            foreach ($request->validated()['order'] as $cardId => $order) {
+                $card = $collumn->cards()->find($cardId);
+                if ($card) {
+                    $card->order = $order;
+                    $card->save();
+                }
+            }
+            return true;
         } catch (\Exception $e) {
             return response('', 404);
         }
