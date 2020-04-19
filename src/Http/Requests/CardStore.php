@@ -30,4 +30,17 @@ class CardStore extends FormRequest
             'collumn_id' => 'required|numeric|exists:collumns,id'
         ];
     }
+
+    /**
+     *  Filters to be applied to the input.
+     *
+     * @return array
+     */
+    public function filters()
+    {
+        return [
+            'name' => 'trim|escape',
+            'description' => 'trim|escape',
+        ];
+    }
 }

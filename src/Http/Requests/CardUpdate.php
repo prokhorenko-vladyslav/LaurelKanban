@@ -13,7 +13,7 @@ class CardUpdate extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,23 @@ class CardUpdate extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:60000',
+            'order' => 'numeric|min:0',
+            'collumn_id' => 'numeric|exists:collumns,id'
+        ];
+    }
+
+    /**
+     *  Filters to be applied to the input.
+     *
+     * @return array
+     */
+    public function filters()
+    {
+        return [
+            'name' => 'trim|escape',
+            'description' => 'trim|escape',
         ];
     }
 }
