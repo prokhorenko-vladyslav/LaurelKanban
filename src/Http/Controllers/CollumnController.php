@@ -13,7 +13,7 @@ class CollumnController extends Controller
     public function index(CollumnIndex $request, int $deskId)
     {
         try {
-            $collumns = Desk::findOrFail($deskId)->collumns()->get();
+            $collumns = Desk::findOrFail($deskId)->collumns()->with('cards')->get();
         } catch (\Exception $e) {
             $collumns = [];
         }
