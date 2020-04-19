@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Laurel\Kanban\Http\Requests\CollumnIndex;
 use Laurel\Kanban\Http\Requests\CollumnStore;
+use Laurel\Kanban\Http\Requests\CollumnUpdate;
 use Laurel\Kanban\Http\Requests\CollumnShow;
 use Laurel\Kanban\Http\Resources\CollumnResource;
 use Laurel\Kanban\Models\Desk;
@@ -41,6 +42,17 @@ class CollumnController extends Controller
             $collumn = new Collumn;
             $collumn->fill($request->validated());
             $collumn->desk()->associate($desk);
+            return (bool)$collumn->save();
+        } catch (\Exception $e) {
+            return response('', 404);
+        }
+    }
+
+    public function update(CollumnUpdate $request, int $deskId, int $collumnId)
+    {
+        try {
+            $collumn = Collumn::findOrFail($collumnId);
+            $collumn->fill($request->validated());
             return (bool)$collumn->save();
         } catch (\Exception $e) {
             return response('', 404);
