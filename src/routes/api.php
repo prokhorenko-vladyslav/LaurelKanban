@@ -42,4 +42,16 @@ Route::prefix('kanban')->namespace('\Laurel\Kanban\Http\Controllers')->group(fun
             'as' => 'collumn.reorder'
         ]);
     Route::apiResource('desk.collumn', 'CollumnController');
+
+    Route::match(['PUT', 'PATCH'], 'desk/{desk}/card/{card}/reorder', [
+            'uses' => 'CardController@reorder',
+            'as' => 'card.reorder'
+        ]);
+
+    Route::match(['PUT', 'PATCH'], 'desk/{desk}/card/{card}/change-collumn', [
+            'uses' => 'CardController@changeCollumn',
+            'as' => 'card.changeCollumn'
+        ]);
+
+    Route::apiResource('desk.card', 'CardController');
 });
