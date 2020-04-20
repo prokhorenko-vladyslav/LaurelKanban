@@ -20,6 +20,8 @@ class AuthController extends Controller
     public function login(AuthLogin $request)
     {
         try {
+            $this->logout($request);
+            
             if (Auth::attempt([
                 'email' => $request->validated()['email'],
                 'password' => $request->validated()['password']
@@ -35,6 +37,20 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return response([
                 'errors' => ['Couldnt login you. Try again later...']
+            ]);
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            Auth::logout();
+            return response([
+                'data' => true
+            ]);
+        } catch (\Exception $e) {
+            return response([
+                'errors' => ['Could not logout you. Try again later...']
             ]);
         }
     }
