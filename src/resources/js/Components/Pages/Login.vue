@@ -53,8 +53,9 @@
                 this.clearServerErrors();
             }
         },
-        created() {
-            if (this.isAuth())
+        async created() {
+            let isAuth = await this.isAuth();
+            if (isAuth)
                 this.pushToHome();
         },
         methods: {
