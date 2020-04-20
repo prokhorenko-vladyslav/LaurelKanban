@@ -54,12 +54,16 @@
             }
         },
         created() {
-
+            if (this.isAuth())
+                this.pushToHome();
         },
         methods: {
-            ...mapActions('Auth', ['login']),
+            ...mapActions('Auth', ['login', 'isAuth']),
             clearServerErrors() {
                 this.serverErrors = null;
+            },
+            pushToHome() {
+                this.$router.push({ name: 'kanban.home' });
             },
             async onSubmit() {
                 if (!this.$v.$invalid) {
@@ -69,7 +73,7 @@
                     });
 
                     if (response.status) {
-                        this.$router.push({ name: 'kanban.home' });
+                        this.pushToHome();
                     } else {
                         this.serverErrors = response.errors;
                     }

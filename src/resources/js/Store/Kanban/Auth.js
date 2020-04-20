@@ -6,20 +6,42 @@ export default {
         tokenType : null,
     },
     mutations: {
-        setAccessToken: (state, accessToken) => state.accessToken = accessToken,
-        setTokenType: (state, tokenType) => state.tokenType = tokenType,
+        setAccessToken: (state, accessToken) => {
+            state.accessToken = accessToken;
+            if (accessToken)
+                localStorage.accessToken = accessToken;
+        },
+        setTokenType: (state, tokenType) => {
+            state.tokenType = tokenType;
+            if (tokenType)
+                localStorage.tokenType = tokenType;
+        },
     },
     getters: {
-
+        getAccessToken: state => state.accessToken,
+        getTokenType: state => state.tokenType,
     },
     actions: {
+        async isAuth({ getters, dispatch }) {
+            let isInLocalStorage = await dispatch('checkLocalStorage');
+            return getters['getAccessToken'] && getters['getTokenType'] || isInLocalStorage;
+        },
+        checkLocalStorage({ commit }) {
+            if (!localStorage.accessToken || !localStorage.tokenType)
+                return false;
+            else {
+                commit('setAccessToken', localStorage.accesToken);
+                commit('setTokenType', localStorage.accesToken);
+                return true;
+            }
+        },
         async init( {
             commit
         } ) {
             axios
                 .get( '/api/kanban/auth/init' )
                 .then( response => {
-                    console.log( response.data );
+
                 } )
         },
         async login( {

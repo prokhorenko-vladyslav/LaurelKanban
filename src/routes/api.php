@@ -20,7 +20,7 @@ Route::prefix('kanban')->namespace('\Laurel\Kanban\App\Http\Controllers')->group
 
     Route::middleware('auth:api')->group(function () {
         Route::get('/auth/init', 'AuthController@init');
-        
+
         Route::match(['PUT', 'PATCH'], 'desk/{desk}/favorite', [
                 'uses' => 'DeskController@favorite',
                 'as' => 'desk.favorite'
