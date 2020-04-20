@@ -1,10 +1,10 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Collumn;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthRegister extends FormRequest
+class Update extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class AuthRegister extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|max:255|email|unique:users,email',
-            'password' => 'required|min:8|not_regex:/[\s]+/|confirmed',
+            'order' => 'numeric|min:0'
         ];
     }
 
@@ -38,10 +37,7 @@ class AuthRegister extends FormRequest
     public function filters()
     {
         return [
-            'name' => 'trim|escape',
-            'email' => 'trim|escape',
-            'password' => 'trim|escape',
-            'password_confirmation' => 'trim|escape',
+            'name' => 'trim|escape'
         ];
     }
 }

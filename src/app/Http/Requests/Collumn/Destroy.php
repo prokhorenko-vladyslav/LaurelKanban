@@ -1,10 +1,10 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Collumn;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CardDestroy extends FormRequest
+class Destroy extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CardDestroy extends FormRequest
     public function rules()
     {
         return [
-            //
+
         ];
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Desk;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CardStore extends FormRequest
+class Update extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +25,14 @@ class CardStore extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'description' => 'string|max:60000',
-            'order' => 'numeric|min:0',
-            'collumn_id' => 'required|numeric|exists:collumns,id'
+            'name' => [
+                'required',
+                'string:255',
+                Rule::unique('desks', 'name')->ignore($this->desk),
+            ],
+            'description' => 'string:1000',
+            'is_favorite' => 'boolean',
+            'is_private' => 'boolean'
         ];
     }
 
@@ -40,7 +45,7 @@ class CardStore extends FormRequest
     {
         return [
             'name' => 'trim|escape',
-            'description' => 'trim|escape',
+            'description' => 'trim|escape'
         ];
     }
 }

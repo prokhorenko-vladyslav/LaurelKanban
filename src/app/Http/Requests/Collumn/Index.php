@@ -1,10 +1,10 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Collumn;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CollumnUpdate extends FormRequest
+class Index extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,20 +24,7 @@ class CollumnUpdate extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
-            'order' => 'numeric|min:0'
-        ];
-    }
-
-    /**
-     *  Filters to be applied to the input.
-     *
-     * @return array
-     */
-    public function filters()
-    {
-        return [
-            'name' => 'trim|escape'
+            //
         ];
     }
 }

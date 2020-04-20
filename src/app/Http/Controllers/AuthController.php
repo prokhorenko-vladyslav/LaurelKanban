@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Laurel\Kanban\App\Http\Resources\UserResource;
-use Laurel\Kanban\App\Http\Requests\AuthLogin;
-use Laurel\Kanban\App\Http\Requests\AuthRegister;
+use Laurel\Kanban\App\Http\Requests\Auth\Login;
+use Laurel\Kanban\App\Http\Requests\Auth\Register;
 use Laurel\Kanban\App\Kanban;
 use Laurel\Kanban\App\Models\Card;
 
@@ -24,7 +24,7 @@ class AuthController extends Controller
         }
     }
 
-    public function login(AuthLogin $request)
+    public function login(Login $request)
     {
         try {
             $this->logout($request);
@@ -62,7 +62,7 @@ class AuthController extends Controller
         }
     }
 
-    public function register(AuthRegister $request)
+    public function register(Register $request)
     {
         try {
             $userClass = config('laurel_kanban.user_class');

@@ -1,10 +1,10 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Card;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeskStore extends FormRequest
+class Store extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class DeskStore extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:desks,name|string|max:255',
-            'description' => 'string|max:1000',
-            'is_favorite' => 'boolean',
-            'is_private' => 'boolean'
+            'name' => 'required|string|max:255',
+            'description' => 'string|max:60000',
+            'order' => 'numeric|min:0',
+            'collumn_id' => 'required|numeric|exists:collumns,id'
         ];
     }
 
@@ -40,7 +40,7 @@ class DeskStore extends FormRequest
     {
         return [
             'name' => 'trim|escape',
-            'description' => 'trim|escape'
+            'description' => 'trim|escape',
         ];
     }
 }

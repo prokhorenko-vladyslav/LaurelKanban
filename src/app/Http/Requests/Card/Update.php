@@ -1,10 +1,10 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Card;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CardUpdate extends FormRequest
+class Update extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

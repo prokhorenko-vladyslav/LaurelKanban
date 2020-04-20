@@ -1,11 +1,10 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class DeskUpdate extends FormRequest
+class Register extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +24,9 @@ class DeskUpdate extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'required',
-                'string:255',
-                Rule::unique('desks', 'name')->ignore($this->desk),
-            ],
-            'description' => 'string:1000',
-            'is_favorite' => 'boolean',
-            'is_private' => 'boolean'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|max:255|email|unique:users,email',
+            'password' => 'required|min:8|not_regex:/[\s]+/|confirmed',
         ];
     }
 
@@ -45,7 +39,9 @@ class DeskUpdate extends FormRequest
     {
         return [
             'name' => 'trim|escape',
-            'description' => 'trim|escape'
+            'email' => 'trim|escape',
+            'password' => 'trim|escape',
+            'password_confirmation' => 'trim|escape',
         ];
     }
 }

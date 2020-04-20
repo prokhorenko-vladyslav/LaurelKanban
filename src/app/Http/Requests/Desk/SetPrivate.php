@@ -1,10 +1,11 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Desk;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class DeskShow extends FormRequest
+class SetPrivate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

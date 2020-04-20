@@ -1,11 +1,10 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Card;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class DeskSetPrivate extends FormRequest
+class Reorder extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +24,8 @@ class DeskSetPrivate extends FormRequest
     public function rules()
     {
         return [
-
+            'order' => 'required|array',
+            'order.*' => 'required|numeric|min:0'
         ];
     }
 }

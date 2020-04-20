@@ -1,10 +1,11 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Desk;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class CollumnShow extends FormRequest
+class SetFavorite extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +25,7 @@ class CollumnShow extends FormRequest
     public function rules()
     {
         return [
-            //
+
         ];
     }
 }

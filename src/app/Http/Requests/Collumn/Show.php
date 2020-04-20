@@ -1,10 +1,10 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Collumn;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CardIndex extends FormRequest
+class Show extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

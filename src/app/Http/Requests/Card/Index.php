@@ -1,10 +1,10 @@
 <?php
 
-namespace Laurel\Kanban\App\Http\Requests;
+namespace Laurel\Kanban\App\Http\Requests\Card;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthLogin extends FormRequest
+class Index extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,21 +24,7 @@ class AuthLogin extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required',
-            'password' => 'required',
-        ];
-    }
-
-    /**
-     *  Filters to be applied to the input.
-     *
-     * @return array
-     */
-    public function filters()
-    {
-        return [
-            'email' => 'trim|escape',
-            'password' => 'trim|escape',
+            //
         ];
     }
 }
