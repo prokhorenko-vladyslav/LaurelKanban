@@ -26,7 +26,7 @@ class Kanban
     public static function routesApi()
     {
         if (! app()->routesAreCached()) {
-            require __DIR__ . '/routes/api.php';
+            require __DIR__ . '/../routes/api.php';
         }
     }
 

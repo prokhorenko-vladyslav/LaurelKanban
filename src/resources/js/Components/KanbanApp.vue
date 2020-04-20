@@ -6,6 +6,7 @@
 
 <script type="text/javascript">
     import AxiosMixin from "../Mixins/AxiosMixin";
+    import { mapActions } from "vuex";
 
     export default {
         name: "KanbanApplication",
@@ -17,9 +18,10 @@
         },
         async created() {
             this.appendInterceptors();
+            // await this.init();
         },
         methods: {
-
+            //...mapActions('Auth', ['init']),
         }
     }
 </script>

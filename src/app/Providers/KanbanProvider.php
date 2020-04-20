@@ -20,11 +20,11 @@ class KanbanProvider extends ServiceProvider
     public function boot()
     {
         Auth::loginUsingId(1);
-        $this->loadMigrationsFrom(__DIR__ . "/../database/migrations");
+        $this->loadMigrationsFrom(__DIR__ . "/../../database/migrations");
         $this->publishes([
-            __DIR__ . "/../config/laurel_kanban.php" => config_path('laurel_kanban.php')
+            __DIR__ . "/../../config/laurel_kanban.php" => config_path('laurel_kanban.php')
         ]);
-        $this->mergeConfigFrom(__DIR__ . "/../config/laurel_kanban.php", 'laurel_kanban');
+        $this->mergeConfigFrom(__DIR__ . "/../../config/laurel_kanban.php", 'laurel_kanban');
     }
 
     /**
