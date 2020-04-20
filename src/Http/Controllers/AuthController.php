@@ -22,14 +22,23 @@ class AuthController extends Controller
 
     public function register(AuthRegister $request)
     {
-        $userClass = config('laurel_kanban.user_class');
-        $credentials = $request->validated();
-        $credentials['password'] = bcrypt($credentials['password']);
-        $user = new $userClass;
-        $user->fill($credentials);
-        $user->save();
-        Auth::login($user);
+        try {
+            $userClass = config('laurel_kanban.user_class');
+            $credentials = $request->validated();
+            $credentials['password'] = bcrypt($credentials['password']);
+            $user = new $userClass;
+            $user->fill($credentials);
+            $user->save();
+            Auth::login($user);
 
-        return true;
+            return response([
+                'status' => true,
+                'data' => new UserResource($user)
+            ]);
+        } catch (\Exception $e) {
+            return response([
+                'status' => false
+            ]);
+        }
     }
 }
