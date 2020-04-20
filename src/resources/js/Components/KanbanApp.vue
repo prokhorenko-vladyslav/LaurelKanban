@@ -18,14 +18,9 @@
         },
         async created() {
             this.appendInterceptors();
-            await this.init();
-            await this.login({
-                email: 'random.person.1907@gmail.com',
-                password : 'K5S41U4c6f'
-            })
         },
         methods: {
-            ...mapActions('Auth', ['init', 'login']),
+
         }
     }
 </script>

@@ -2,9 +2,12 @@ export default {
     namespaced: true,
     state: {
         user: {},
+        accessToken : null,
+        tokenType : null,
     },
     mutations: {
-
+        setAccessToken: (state, accessToken) => state.accessToken = accessToken,
+        setTokenType: (state, tokenType) => state.tokenType = tokenType,
     },
     getters: {
 
@@ -25,11 +28,23 @@ export default {
             email,
             password
         } ) {
-            axios.post( '/api/kanban/auth/login', {
+            return axios.post( '/api/kanban/auth/login', {
                 email,
                 password
             } ).then( response => {
-                console.log( response.data )
+                if (response.data.errors)
+                    return {
+                        status: false,
+                        errors : response.data.errors
+                    };
+                else {
+                    commit('setAccessToken', response.data.access_token);
+                    commit('setTokenType', response.data.token_type);
+
+                    return {
+                        status: true
+                    };
+                }
             } )
         }
     },

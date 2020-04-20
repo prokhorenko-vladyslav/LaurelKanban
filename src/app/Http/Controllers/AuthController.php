@@ -1,6 +1,6 @@
 <?php
 
-namespace Laurel\Kanban\app\Http\Controllers;
+namespace Laurel\Kanban\App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
