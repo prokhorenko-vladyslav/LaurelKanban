@@ -18,6 +18,19 @@ export default {
                 .then( response => {
                     console.log( response.data );
                 } )
+        },
+        async login( {
+            commit
+        }, {
+            email,
+            password
+        } ) {
+            axios.post( '/api/kanban/auth/login', {
+                email,
+                password
+            } ).then( response => {
+                console.log( response.data )
+            } )
         }
     },
 }

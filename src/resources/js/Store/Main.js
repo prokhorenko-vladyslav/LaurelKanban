@@ -1,5 +1,8 @@
 import Vuex from "vuex";
+import modules from "./Bootstrap";
 
-export default new Vuex.Store( {
-    modules: () => console.log( import( './Bootstrap' ) ),
+const store = new Vuex.Store( {
+    modules,
 } );
+
+export default store;
