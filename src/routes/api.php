@@ -15,8 +15,10 @@ use Illuminate\Support\Facades\Route;
 */
 //middleware('auth:api')->
 Route::prefix('kanban')->namespace('\Laurel\Kanban\Http\Controllers')->group(function () {
+    Route::get('/auth/init', 'AuthController@init');
     Route::post('/auth/register', 'AuthController@register');
     Route::post('/auth/login', 'AuthController@login');
+    Route::get('/auth/logout', 'AuthController@logout');
 
     Route::match(['PUT', 'PATCH'], 'desk/{desk}/favorite', [
             'uses' => 'DeskController@favorite',

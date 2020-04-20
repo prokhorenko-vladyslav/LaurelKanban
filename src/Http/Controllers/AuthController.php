@@ -15,17 +15,24 @@ class AuthController extends Controller
 {
     public function init(Request $request)
     {
+        if (Auth::user()) {
+            return response([
+                'data' => new UserResource(Auth::user())
+            ]);
+        } else {
+            return response(['errors' => 'Unauthorized'], 401);
+        }
     }
 
     public function login(AuthLogin $request)
     {
         try {
             $this->logout($request);
-            
-            if (Auth::attempt([
+
+            if (Auth::guard('web')->attempt([
                 'email' => $request->validated()['email'],
                 'password' => $request->validated()['password']
-                ])) {
+            ], false, false)) {
                 return response([
                     'data' => new UserResource(Auth::user())
                 ]);
@@ -44,7 +51,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            Auth::logout();
+            Auth::guard('web')->logout();
             return response([
                 'data' => true
             ]);
@@ -64,7 +71,7 @@ class AuthController extends Controller
             $user = new $userClass;
             $user->fill($credentials);
             $user->save();
-            Auth::login($user);
+            Auth::guard('web')->login($user);
 
             return response([
                 'data' => new UserResource($user)
