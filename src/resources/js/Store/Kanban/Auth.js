@@ -27,7 +27,10 @@ export default {
             return getters['getAccessToken'] && getters['getTokenType'] || isInLocalStorage;
         },
         checkLocalStorage({ commit }) {
-            if (!localStorage.accessToken || !localStorage.tokenType)
+            if (
+                !localStorage.accessToken || !localStorage.tokenType ||
+                localStorage.accessToken === 'null' || localStorage.accessToken === 'null'
+            )
                 return false;
             else {
                 commit('setAccessToken', localStorage.accessToken);
@@ -57,6 +60,8 @@ export default {
                 else {
                     commit('setAccessToken', response.data.access_token);
                     commit('setTokenType', response.data.token_type);
+                    localStorage.accessToken = response.data.access_token;
+                    localStorage.tokenType = response.data.token_type;
 
                     return {
                         status: true

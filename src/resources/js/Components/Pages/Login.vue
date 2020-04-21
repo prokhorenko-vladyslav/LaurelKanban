@@ -55,9 +55,9 @@
         },
         async created() {
             let isAuth = await this.isAuth();
-            console.log(isAuth);
-            if (isAuth)
+            if (isAuth) {
                 this.pushToHome();
+            }
         },
         methods: {
             ...mapActions('Auth', ['login', 'isAuth']),
