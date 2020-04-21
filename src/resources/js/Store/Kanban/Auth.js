@@ -12,6 +12,10 @@ export default {
         setTokenType: (state, tokenType) => {
             state.tokenType = tokenType;
         },
+        clearLocalStorageFromAuth: state => {
+            localStorage.accessToken = null;
+            localStorage.tokenType = null;
+        }
     },
     getters: {
         getAccessToken: state => state.accessToken,
@@ -66,7 +70,20 @@ export default {
                 }
             })
         },
-        async register( { commit }, { name, email, password, password_confirmation } ) {
+        async logout( { commit }) {
+            return axios.get('/api/kanban/auth/logout').then( response => {
+                if (response.status) {
+                    commit('setAccessToken', null);
+                    commit('setTokenType', null);
+                    commit('clearLocalStorageFromAuth');
+                }
+            });
+        },
+        async register( { commit, dispatch }, { name, email, password, password_confirmation } ) {
+            let isAuth = await dispatch('isAuth');
+            if (isAuth) {
+                await dispatch('logout');
+            }
             return axios.post( '/api/kanban/auth/register', {
                 name,
                 email,

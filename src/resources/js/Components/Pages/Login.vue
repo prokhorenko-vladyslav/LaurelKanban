@@ -55,6 +55,7 @@
         },
         async created() {
             let isAuth = await this.isAuth();
+            console.log(isAuth);
             if (isAuth)
                 this.pushToHome();
         },
