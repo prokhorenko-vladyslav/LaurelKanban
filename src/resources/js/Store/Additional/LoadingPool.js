@@ -34,7 +34,6 @@ export default {
             dispatch
         } ) {
             commit( 'decrementLoadingPool' );
-            console.log( parseInt( getters[ 'getLoadingPool' ] ) === 0, getters[ 'getLoadingPoolTimerInstance' ] );
             if ( parseInt( getters[ 'getLoadingPool' ] ) === 0 && getters[ 'getLoadingPoolTimerInstance' ] )
                 dispatch( 'stopInterval' );
         },

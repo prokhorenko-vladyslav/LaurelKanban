@@ -73,7 +73,7 @@ class AuthController extends Controller
             }
 
             return response([
-                'data' => true
+                'status' => true
             ]);
         } catch (\Exception $e) {
             return response([
@@ -85,6 +85,8 @@ class AuthController extends Controller
     public function register(Register $request)
     {
         try {
+            $this->logout($request);
+
             $userClass = config('laurel_kanban.user_class');
             $credentials = $request->validated();
             $credentials['password'] = bcrypt($credentials['password']);
@@ -92,10 +94,12 @@ class AuthController extends Controller
             $user->fill($credentials);
             $user->save();
 
-            return $this->login($request);
+            return response([
+                'status' => true
+            ]);
         } catch (\Exception $e) {
             return response([
-                'errors' => ['Couldnt create user. Try again later...']
+                'errors' => ['Could not create user. Try again later...']
             ]);
         }
     }

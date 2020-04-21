@@ -8,13 +8,9 @@ export default {
     mutations: {
         setAccessToken: (state, accessToken) => {
             state.accessToken = accessToken;
-            if (accessToken)
-                localStorage.accessToken = accessToken;
         },
         setTokenType: (state, tokenType) => {
             state.tokenType = tokenType;
-            if (tokenType)
-                localStorage.tokenType = tokenType;
         },
     },
     getters: {
@@ -30,8 +26,8 @@ export default {
             if (!localStorage.accessToken || !localStorage.tokenType)
                 return false;
             else {
-                commit('setAccessToken', localStorage.accesToken);
-                commit('setTokenType', localStorage.accesToken);
+                commit('setAccessToken', localStorage.accessToken);
+                commit('setTokenType', localStorage.tokenType);
                 return true;
             }
         },
@@ -44,12 +40,7 @@ export default {
 
                 } )
         },
-        async login( {
-            commit
-        }, {
-            email,
-            password
-        } ) {
+        async login( { commit }, { email, password } ) {
             return axios.post( '/api/kanban/auth/login', {
                 email,
                 password
@@ -68,6 +59,40 @@ export default {
                     };
                 }
             } )
-        }
+            .catch(error => {
+                return {
+                    status : false,
+                    errors: error.response.data.errors,
+                }
+            })
+        },
+        async register( { commit }, { name, email, password, password_confirmation } ) {
+            return axios.post( '/api/kanban/auth/register', {
+                name,
+                email,
+                password,
+                password_confirmation
+            } ).then( response => {
+                if (response.data.errors)
+                    return {
+                        status: false,
+                        errors : response.data.errors
+                    };
+                else {
+                    commit('setAccessToken', response.data.access_token);
+                    commit('setTokenType', response.data.token_type);
+
+                    return {
+                        status: true
+                    };
+                }
+            } )
+                .catch(error => {
+                    return {
+                        status : false,
+                        errors: error.response.data.errors,
+                    }
+                })
+        },
     },
 }
