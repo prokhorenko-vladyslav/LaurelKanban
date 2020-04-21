@@ -27,6 +27,8 @@ export default {
         },
         appendResponseInterceptor() {
             axios.interceptors.response.use((response) => {
+
+                console.log(response);
                 this.removeFromLoadingPool();
                 return response;
             }, error => {

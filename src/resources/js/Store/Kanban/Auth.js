@@ -1,7 +1,7 @@
 export default {
     namespaced: true,
     state: {
-        user: {},
+        user: null,
         accessToken : null,
         tokenType : null,
     },
@@ -15,7 +15,8 @@ export default {
         clearLocalStorageFromAuth: state => {
             localStorage.accessToken = null;
             localStorage.tokenType = null;
-        }
+        },
+        setUser: (state, user) => state.user = user,
     },
     getters: {
         getAccessToken: state => state.accessToken,
@@ -44,7 +45,7 @@ export default {
             axios
                 .get( '/api/kanban/auth/init' )
                 .then( response => {
-
+                    commit('setUser', response.data.data);
                 } )
         },
         async login( { commit }, { email, password } ) {
@@ -81,6 +82,7 @@ export default {
                     commit('setAccessToken', null);
                     commit('setTokenType', null);
                     commit('clearLocalStorageFromAuth');
+                    commit('setUser', null);
                 }
             });
         },
