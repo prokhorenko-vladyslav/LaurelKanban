@@ -10,7 +10,7 @@
                     </div>
                 </transition>
                 </div>
-                <div class="form-group" :class="{ 'form-group--error': $v.email.$error }">
+                <div class="form-group first" :class="{ 'form-group--error': $v.email.$error }">
                     <transition name="fade">
                         <template v-if="submitted">
                             <div class="error" v-if="!$v.email.required">Email is required</div>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input class="form__submit" type="submit" value="Login">
+                    <input class="form__submit" type="submit" value="Enter">
                 </div>
             </form>
         </div>
@@ -147,6 +147,10 @@
                     justify-content: center;
                     flex-direction: column;
                     margin-top: 1rem;
+
+                    &.first {
+                        margin-top: .5rem;
+                    }
 
                     .form__input {
                         width: 100%;
