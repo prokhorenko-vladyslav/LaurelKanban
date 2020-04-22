@@ -171,6 +171,7 @@
                     .form__link {
                         color: #0e63f4;
                         text-decoration: none;
+                        font-size: .95rem;
                     }
 
                     .form__input {
