@@ -26,6 +26,8 @@
 </script>
 
 <style lang='scss'>
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400;500&display=swap');
+
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
     }
@@ -38,6 +40,7 @@
         width: 100%;
         margin: 0;
         padding: 0;
+        font-family: 'Baloo Bhai 2', cursive;
 
         #app {
             width: 100%;
