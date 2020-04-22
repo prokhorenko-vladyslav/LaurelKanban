@@ -40,7 +40,11 @@
         width: 100%;
         margin: 0;
         padding: 0;
-        font-family: 'Baloo Bhai 2', cursive;
+        overflow: hidden;
+
+        &, * {
+            font-family: 'Baloo Bhai 2', cursive;
+        }
 
         #app {
             width: 100%;

@@ -1,5 +1,5 @@
 <template>
-    <div id="login" class="page">
+    <div id="login" class="page" :class="{ loaded }">
         <h1 class="page__header">Login</h1>
         <div class="page__content">
             <form action="#" class="form" @submit.prevent="onSubmit">
@@ -47,7 +47,8 @@
                 email : null,
                 password : null,
                 serverErrors : null,
-                submitted : false
+                submitted : false,
+                loaded : false
             }
         },
         validations: {
@@ -72,6 +73,9 @@
             if (isAuth) {
                 this.pushToHome();
             }
+        },
+        mounted() {
+            setTimeout(() => this.loaded = true, 500);
         },
         methods: {
             ...mapActions('Auth', ['login', 'isAuth']),
@@ -112,7 +116,14 @@
         z-index: 2;
 
         &#login {
+            position: relative;
+            right: -100%;
             width: 500px;
+            transition: all .3s ease-in-out;
+
+            &.loaded {
+                right: 0;
+            }
         }
 
         .page__header {

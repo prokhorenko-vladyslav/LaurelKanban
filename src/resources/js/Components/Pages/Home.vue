@@ -36,5 +36,7 @@
 </script>
 
 <style lang='scss'>
-
+    #home {
+        z-index: 2;
+    }
 </style>
