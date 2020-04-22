@@ -29,6 +29,10 @@
                 </div>
 
                 <div class="form-group">
+                    <router-link :to="{ name : 'kanban.register' }" class="form__link">Don`t have an account?</router-link>
+                </div>
+
+                <div class="form-group">
                     <input class="form__submit" type="submit" value="Enter">
                 </div>
             </form>
@@ -164,6 +168,11 @@
                         margin-top: .5rem;
                     }
 
+                    .form__link {
+                        color: #0e63f4;
+                        text-decoration: none;
+                    }
+
                     .form__input {
                         width: 100%;
                         padding: 1rem;
@@ -179,7 +188,7 @@
                     .form__submit {
                         width: 10rem;
                         height: 2.5rem;
-                        margin: 1rem auto 2rem auto;
+                        margin: .25rem auto 2rem auto;
                         padding: .25rem 2rem;
                         border: 1px solid #0e63f4;
                         border-radius: .25rem;
