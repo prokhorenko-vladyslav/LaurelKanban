@@ -108,6 +108,7 @@
         flex-direction: column;
         border-radius: .5rem;
         background: #fff;
+        box-shadow: 0 0 15px 5px rgba(0, 0, 0, .08);
         z-index: 2;
 
         &#login {
@@ -157,6 +158,11 @@
                         padding: 1rem;
                         border: 1px solid rgba(202, 216, 245, 0.76);
                         border-radius: .25rem;
+                        transition: all .3s ease-in-out;
+
+                        &:focus {
+                            box-shadow: 0 0 15px 3px rgba(187, 205, 241, .5);
+                        }
                     }
 
                     .form__submit {
