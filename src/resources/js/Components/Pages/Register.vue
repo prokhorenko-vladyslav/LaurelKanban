@@ -1,43 +1,68 @@
 <template>
-    <div id="register">
-        <form action="#" @submit.prevent="onSubmit">
-            <div class="error" v-for="error in serverErrors">
-                {{ error }}
+    <div id="register" class="page" :class="{ loaded }">
+        <div class="page__header">Register</div>
+        <div class="page__content">
+        <form action="#" class="form" @submit.prevent="onSubmit">
+            <div class="errors">
+                <transition name="fade">
+                    <div class="error" v-for="error in serverErrors">
+                        {{ error }}
+                    </div>
+                </transition>
             </div>
             <div class="form-group" :class="{ 'form-group--error': $v.name.$error }">
-                <label class="form__label">Name</label>
-                <input class="form__input" type="text" v-model.trim="$v.name.$model"/>
+                <transition name="fade">
+                    <template v-if="submitted">
+                        <div class="error" v-if="!$v.name.required">Name is required</div>
+                        <div class="error" v-for="error in nameServerErrors">{{ error }}</div>
+                    </template>
+                </transition>
+                <input class="form__input" type="text" placeholder="Name" v-model.trim="$v.name.$model"/>
             </div>
-            <div class="error" v-if="!$v.name.required">Name is required</div>
-            <div class="error" v-for="error in nameServerErrors">{{ error }}</div>
 
             <div class="form-group" :class="{ 'form-group--error': $v.email.$error }">
-                <label class="form__label">Email</label>
-                <input class="form__input" type="text" v-model.trim="$v.email.$model"/>
+                <transition name="fade">
+                    <template v-if="submitted">
+                        <div class="error" v-if="!$v.email.required">Email is required</div>
+                        <div class="error" v-if="!$v.email.email">Email is invalid</div>
+                        <div class="error" v-for="error in emailServerErrors">{{ error }}</div>
+                    </template>
+                </transition>
+                <input class="form__input" type="text" placeholder="Email" v-model.trim="$v.email.$model"/>
             </div>
-            <div class="error" v-if="!$v.email.required">Email is required</div>
-            <div class="error" v-if="!$v.email.email">Email is invalid</div>
-            <div class="error" v-for="error in emailServerErrors">{{ error }}</div>
 
             <div class="form-group" :class="{ 'form-group--error': $v.password.$error }">
-                <label class="form__label">Password</label>
-                <input class="form__input" type="password" v-model.trim="$v.password.$model"/>
+                <transition name="fade">
+                    <template v-if="submitted">
+                        <div class="error" v-if="!$v.password.required">Password is required</div>
+                        <div class="error" v-if="!$v.password.alphaNum">Password can contain only alphanumerics characters</div>
+                        <div class="error" v-if="!$v.password.minLength">Password too short</div>
+                        <div class="error" v-for="error in passwordServerErrors">{{ error }}</div>
+                    </template>
+                </transition>
+                <input class="form__input" type="password" placeholder="Password"  v-model.trim="$v.password.$model"/>
             </div>
-            <div class="error" v-if="!$v.password.required">Password is required</div>
-            <div class="error" v-if="!$v.password.alphaNum">Password can contain only alphanumerics characters</div>
-            <div class="error" v-if="!$v.password.minLength">Password too short</div>
-            <div class="error" v-for="error in passwordServerErrors">{{ error }}</div>
 
             <div class="form-group" :class="{ 'form-group--error': $v.password_confirmation.$error }">
-                <label class="form__label">Password confirmation</label>
-                <input class="form__input" type="password" v-model.trim="$v.password_confirmation.$model"/>
+                <transition name="fade">
+                    <template v-if="submitted">
+                        <div class="error" v-if="!$v.password_confirmation.required">Please confirm your password</div>
+                        <div class="error" v-if="!$v.password_confirmation.sameAs">Field must be equal to password</div>
+                        <div class="error" v-for="error in passwordConfirmationServerErrors">{{ error }}</div>
+                    </template>
+                </transition>
+                <input class="form__input" type="password" placeholder="Password confirmation" v-model.trim="$v.password_confirmation.$model"/>
             </div>
-            <div class="error" v-if="!$v.password_confirmation.required">Please confirm your password</div>
-            <div class="error" v-if="!$v.password_confirmation.sameAs">Field must be equal to password</div>
-            <div class="error" v-for="error in passwordConfirmationServerErrors">{{ error }}</div>
 
-            <input type="submit">
+            <div class="form-group">
+                <router-link :to="{ name : 'kanban.login' }" class="form__link">Already have an account?</router-link>
+            </div>
+
+            <div class="form-group">
+                <input class="form__submit" type="submit" value="Create">
+            </div>
         </form>
+        </div>
     </div>
 </template>
 
@@ -61,7 +86,9 @@
                 password_confirmation : null,
                 passwordConfirmationServerErrors: [],
 
-                serverErrors : null
+                serverErrors : null,
+                submitted: false,
+                loaded : false
             }
         },
         validations: {
@@ -97,6 +124,9 @@
             if (isAuth)
                 this.pushToHome();*/
         },
+        mounted() {
+            setTimeout(() => this.loaded = true, 500);
+        },
         methods: {
             ...mapActions('Auth', ['register', 'isAuth']),
             clearServerErrors() {
@@ -109,6 +139,7 @@
                 this.$router.push({ name: 'kanban.login' });
             },
             async onSubmit() {
+                this.submitted = true;
                 if (!this.$v.$invalid) {
                     let response = await this.register({
                         name: this.name,
@@ -139,5 +170,18 @@
 </script>
 
 <style lang='scss'>
+    @import "./packages/laurel/kanban/src/resources/scss/page";
 
+    .page {
+        &#register {
+            position: relative;
+            right: -100%;
+            width: 500px;
+            transition: all .4s ease-in-out;
+
+            &.loaded {
+                right: 0;
+            }
+        }
+    }
 </style>

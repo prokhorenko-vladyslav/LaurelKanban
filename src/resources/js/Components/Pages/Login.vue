@@ -109,16 +109,9 @@
 </script>
 
 <style lang='scss'>
-    .page {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        border-radius: .5rem;
-        background: #fff;
-        box-shadow: 0 0 15px 5px rgba(0, 0, 0, .08);
-        z-index: 2;
+    @import "./packages/laurel/kanban/src/resources/scss/page";
 
+    .page {
         &#login {
             position: relative;
             right: -100%;
@@ -127,84 +120,6 @@
 
             &.loaded {
                 right: 0;
-            }
-        }
-
-        .page__header {
-            margin: 2rem 0 0 0;
-            color: #0e1952;
-            font-size: 2.7rem;
-        }
-
-        .page__content {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            .form {
-                width: 100%;
-                padding-left: 3rem;
-                padding-right: 3rem;
-
-                .errors {
-                    margin-top: 1rem;
-                }
-
-                .error {
-                    margin: 0 0 .25rem 0;
-                    text-align: left;
-                    color: #f54d4d;
-                    font-size: .8rem;
-                }
-
-                .form-group {
-                    display: flex;
-                    justify-content: center;
-                    flex-direction: column;
-                    margin-top: 1rem;
-
-                    &.first {
-                        margin-top: .5rem;
-                    }
-
-                    .form__link {
-                        color: #0e63f4;
-                        text-decoration: none;
-                        font-size: .95rem;
-                    }
-
-                    .form__input {
-                        width: 100%;
-                        padding: 1rem;
-                        border: 1px solid rgba(202, 216, 245, 0.76);
-                        border-radius: .25rem;
-                        transition: all .3s ease-in-out;
-
-                        &:focus {
-                            box-shadow: 0 0 15px 3px rgba(187, 205, 241, .5);
-                        }
-                    }
-
-                    .form__submit {
-                        width: 10rem;
-                        height: 2.5rem;
-                        margin: .25rem auto 2rem auto;
-                        padding: .25rem 2rem;
-                        border: 1px solid #0e63f4;
-                        border-radius: .25rem;
-                        background: #0e63f4;
-                        color: #fff;
-                        font-size: 1.2rem;
-                        cursor: pointer;
-                        box-shadow: 0px 5px 15px 3px rgb(175, 193, 231);
-                        transition: all .3s ease-in-out;
-
-                        &:hover {
-                            box-shadow: 0px 5px 20px 6px rgb(175, 193, 231);
-                        }
-                    }
-                }
             }
         }
     }
