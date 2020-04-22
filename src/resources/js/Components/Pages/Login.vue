@@ -119,7 +119,7 @@
             position: relative;
             right: -100%;
             width: 500px;
-            transition: all .3s ease-in-out;
+            transition: all .4s ease-in-out;
 
             &.loaded {
                 right: 0;
