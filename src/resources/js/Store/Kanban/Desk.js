@@ -4,7 +4,7 @@ export default {
         desks : []
     },
     mutations: {
-
+        setDesks: (state, desks) => state.desks = desks,
     },
     getters: {
 
@@ -14,7 +14,7 @@ export default {
             axios
                 .get('/api/kanban/desk')
                 .then( response => {
-                    console.log(response.data);
+                    commit('setDesks', response.data.data);
                 })
         }
     },

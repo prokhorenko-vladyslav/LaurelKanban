@@ -1,6 +1,13 @@
 <template>
     <div id="desks">
         <page-header></page-header>
+        <div class="desks__list">
+            <desk-component
+                v-for="desk in desks"
+                :key="desk.id"
+                :desk="desk"
+            ></desk-component>
+        </div>
     </div>
 </template>
 
@@ -42,6 +49,13 @@
     }
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
+    #desks {
+        z-index: 3;
 
+        .desks__list {
+            display: flex;
+            justify-content: flex-start;
+        }
+    }
 </style>

@@ -42,7 +42,7 @@
         padding-left: 3rem;
         padding-right: 3rem;
         box-shadow: 0 5px 15px 3px rgb(175, 193, 231);
-        background: rgba(53, 120, 236, 0.4);
+        background: rgba(231, 237, 243, 0.82);
         z-index: 3;
 
         .page-header__user {
@@ -56,7 +56,7 @@
             }
 
             .page-header__user__name {
-                color: #fff;
+                color: #0e63f4;
                 font-weight: 500;
             }
 
