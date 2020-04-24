@@ -33,7 +33,10 @@
                 </div>
 
                 <div class="form-group">
-                    <input class="form__submit" type="submit" value="Enter">
+                    <div class="form__submit">
+                        <input type="submit" value="Enter" v-if="!loading">
+                        <img src="../../../images/loader.png" alt="" v-else>
+                    </div>
                 </div>
             </form>
         </div>
@@ -52,7 +55,8 @@
                 password : null,
                 serverErrors : null,
                 submitted : false,
-                loaded : false
+                loaded : false,
+                loading : false,
             }
         },
         validations: {
@@ -92,16 +96,21 @@
             async onSubmit() {
                 this.submitted = true;
                 if (!this.$v.$invalid) {
+                    this.loading = true;
                     let response = await this.login({
                         email: this.email,
                         password: this.password
                     });
 
-                    if (response.status) {
-                        this.pushToDesks();
-                    } else {
+                    if (!response.status) {
                         this.serverErrors = response.errors;
                     }
+
+                    setTimeout(() => {
+                        this.loading = false;
+                        if (response.status)
+                            this.pushToDesks();
+                    }, 1000);
                 }
             }
         }
