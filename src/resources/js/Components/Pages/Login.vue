@@ -75,7 +75,7 @@
         async created() {
             let isAuth = await this.isAuth();
             if (isAuth) {
-                this.pushToHome();
+                this.pushToDesks();
             }
         },
         mounted() {
@@ -86,8 +86,8 @@
             clearServerErrors() {
                 this.serverErrors = null;
             },
-            pushToHome() {
-                this.$router.push({ name: 'kanban.home' });
+            pushToDesks() {
+                this.$router.push({ name: 'kanban.desks' });
             },
             async onSubmit() {
                 this.submitted = true;
@@ -98,7 +98,7 @@
                     });
 
                     if (response.status) {
-                        this.pushToHome();
+                        this.pushToDesks();
                     } else {
                         this.serverErrors = response.errors;
                     }

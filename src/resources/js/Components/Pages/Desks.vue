@@ -14,8 +14,17 @@
 
             }
         },
+        async created() {
+            let isAuth = await this.isAuth();
+            if (!isAuth) {
+                this.pushToLoginPage()
+            }
+        },
         methods: {
-
+            ...mapActions('Auth', ['isAuth']),
+            pushToLoginPage() {
+                this.$router.push({ name: 'kanban.login' });
+            },
         }
     }
 </script>
