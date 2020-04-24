@@ -18,12 +18,12 @@ use Laurel\Kanban\App\Kanban;
 
 class DeskController extends Controller
 {
-    public function index(DeskIndex $request)
+    public function index(Index $request)
     {
         return DeskResource::collection(Kanban::getUserDesks()->paginate(config('laurel_kanban.desk.page_count')));
     }
 
-    public function show(DeskShow $request, $deskId)
+    public function show(Show $request, $deskId)
     {
         try {
             return new DeskResource(Kanban::getUserDesks()->findOrFail($deskId)->load('collumns'));
@@ -32,7 +32,7 @@ class DeskController extends Controller
         }
     }
 
-    public function store(DeskStore $request)
+    public function store(Store $request)
     {
         $desk = new Desk;
         $desk->fill($request->validated());
@@ -40,7 +40,7 @@ class DeskController extends Controller
         return (bool)$desk->save();
     }
 
-    public function update(DeskUpdate $request, int $deskId)
+    public function update(Update $request, int $deskId)
     {
         try {
             $desk = Kanban::getUserDesks()->findOrFail($deskId);
@@ -52,7 +52,7 @@ class DeskController extends Controller
         }
     }
 
-    public function destroy(DeskDestroy $request, int $deskId)
+    public function destroy(Destroy $request, int $deskId)
     {
         try {
             $desk = Kanban::getUserDesks()->findOrFail($deskId);
@@ -66,7 +66,7 @@ class DeskController extends Controller
         }
     }
 
-    public function favorite(DeskSetFavorite $request, int $deskId)
+    public function favorite(SetFavorite $request, int $deskId)
     {
         try {
             $desk = Kanban::getUserDesks()->findOrFail($deskId);
@@ -77,7 +77,7 @@ class DeskController extends Controller
         }
     }
 
-    public function unfavorite(DeskSetFavorite $request, int $deskId)
+    public function unfavorite(SetFavorite $request, int $deskId)
     {
         try {
             $desk = Kanban::getUserDesks()->findOrFail($deskId);
@@ -88,7 +88,7 @@ class DeskController extends Controller
         }
     }
 
-    public function private(DeskSetPrivate $request, int $deskId)
+    public function private(SetPrivate $request, int $deskId)
     {
         try {
             $desk = Kanban::getUserDesks()->findOrFail($deskId);
@@ -99,7 +99,7 @@ class DeskController extends Controller
         }
     }
 
-    public function public(DeskSetPrivate $request, int $deskId)
+    public function public(SetPrivate $request, int $deskId)
     {
         try {
             $desk = Kanban::getUserDesks()->findOrFail($deskId);

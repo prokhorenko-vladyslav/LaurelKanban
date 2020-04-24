@@ -1,8 +1,8 @@
 <?php
 
-namespace Laurel\Kanban;
+namespace Laurel\Kanban\App;
 
-use Laurel\Kanban\Models\Desk;
+use Laurel\Kanban\App\Models\Desk;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 

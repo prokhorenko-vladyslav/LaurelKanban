@@ -5,7 +5,7 @@
 </template>
 
 <script type="text/javascript">
-    import { mapActions } from "vuex";
+    import {mapActions, mapState} from "vuex";
 
     export default {
         name: "Desks",
@@ -14,14 +14,21 @@
 
             }
         },
+        computed: {
+            ...mapState('Auth', ['user']),
+            ...mapState('Desk', ['desks']),
+        },
         async created() {
             let isAuth = await this.isAuth();
             if (!isAuth) {
                 this.pushToLoginPage()
             }
+            await this.init();
+            await this.loadDesks();
         },
         methods: {
-            ...mapActions('Auth', ['isAuth']),
+            ...mapActions('Auth', ['isAuth', 'init']),
+            ...mapActions('Desk', ['loadDesks']),
             pushToLoginPage() {
                 this.$router.push({ name: 'kanban.login' });
             },

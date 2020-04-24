@@ -4,6 +4,7 @@ export default {
         user: null,
         accessToken : null,
         tokenType : null,
+        initiated: false,
     },
     mutations: {
         setAccessToken: (state, accessToken) => {
@@ -17,10 +18,12 @@ export default {
             localStorage.tokenType = null;
         },
         setUser: (state, user) => state.user = user,
+        setInitiated: (state, initiated) => state.initiated = initiated,
     },
     getters: {
         getAccessToken: state => state.accessToken,
         getTokenType: state => state.tokenType,
+        getInitiated: state => state.initiated,
     },
     actions: {
         async isAuth({ getters, dispatch }) {
@@ -40,13 +43,16 @@ export default {
             }
         },
         async init( {
-            commit
+            commit, getters
         } ) {
-            axios
-                .get( '/api/kanban/auth/init' )
-                .then( response => {
-                    commit('setUser', response.data.data);
-                } )
+            if (!getters['getInitiated']) {
+                axios
+                    .get( '/api/kanban/auth/init' )
+                    .then( response => {
+                        commit('setUser', response.data.data);
+                        commit('setInitiated', true);
+                    } )
+            }
         },
         async login( { commit }, { email, password } ) {
             return axios.post( '/api/kanban/auth/login', {

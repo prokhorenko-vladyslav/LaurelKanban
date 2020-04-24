@@ -1,7 +1,7 @@
 export default {
     namespaced: true,
     state: {
-
+        desks : []
     },
     mutations: {
 
@@ -10,6 +10,12 @@ export default {
 
     },
     actions: {
-
+        async loadDesks({ commit }) {
+            axios
+                .get('/api/kanban/desk')
+                .then( response => {
+                    console.log(response.data);
+                })
+        }
     },
 }
