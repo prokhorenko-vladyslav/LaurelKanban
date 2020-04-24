@@ -3,7 +3,6 @@
 namespace Laurel\Kanban\App;
 
 use Laurel\Kanban\App\Models\Desk;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
 class Kanban

@@ -67,6 +67,7 @@ export default {
                 else {
                     commit('setAccessToken', response.data.access_token);
                     commit('setTokenType', response.data.token_type);
+                    commit('setInitiated', false);
                     localStorage.accessToken = response.data.access_token;
                     localStorage.tokenType = response.data.token_type;
 
@@ -89,6 +90,10 @@ export default {
                     commit('setTokenType', null);
                     commit('clearLocalStorageFromAuth');
                     commit('setUser', null);
+
+                    return true;
+                } else {
+                    return false;
                 }
             });
         },

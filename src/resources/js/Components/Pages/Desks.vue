@@ -1,6 +1,6 @@
 <template>
     <div id="desks">
-
+        <page-header></page-header>
     </div>
 </template>
 
@@ -25,6 +25,12 @@
             }
             await this.init();
             await this.loadDesks();
+        },
+        watch: {
+            async $route (to, from){
+                await this.init();
+                await this.loadDesks();
+            }
         },
         methods: {
             ...mapActions('Auth', ['isAuth', 'init']),
