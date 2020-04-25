@@ -7,7 +7,6 @@
                 :key="desk.id"
                 :desk="desk"
             ></desk-component>
-            <new-desk></new-desk>
         </div>
     </div>
 </template>

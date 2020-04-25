@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Collumn extends Model
 {
     protected $fillable = ['name', 'order'];
+    protected $with = ['cards'];
 
     public function desk()
     {
@@ -15,7 +16,7 @@ class Collumn extends Model
 
     public function cards()
     {
-        return $this->hasMany(Card::class);
+        return $this->hasMany(Card::class)->orderBy('order');
     }
 
     public function user()

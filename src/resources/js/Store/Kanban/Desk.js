@@ -16,6 +16,16 @@ export default {
                 .then( response => {
                     commit('setDesks', response.data.data);
                 })
+        },
+        async loadDesk({ commit }, deskId) {
+            return axios
+                .get(`/api/kanban/desk/${deskId}`)
+                .then( response => {
+                    if (response.data.data)
+                        return response.data.data;
+                    else
+                        return false;
+                })
         }
     },
 }

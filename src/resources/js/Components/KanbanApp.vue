@@ -69,7 +69,7 @@
                     height: 100%;
                     background: #bed5fc;
                     z-index: 1;
-                    opacity: .6;
+                    opacity: .35;
                 }
 
                 &, * {
