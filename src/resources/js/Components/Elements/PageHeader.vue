@@ -41,7 +41,7 @@
         height: 3rem;
         padding-left: 3rem;
         padding-right: 3rem;
-        box-shadow: 0 5px 15px 3px rgb(175, 193, 231);
+        box-shadow: 0 5px 6px 1px rgba(175, 193, 231, .5);
         background: rgba(231, 237, 243, 0.82);
         z-index: 3;
 
