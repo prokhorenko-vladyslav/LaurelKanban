@@ -4,7 +4,7 @@
         <div class="single-desk-content" v-if="desk">
             <desk-collumn
                 v-for="collumn in desk.collumns"
-                :key="desk.id"
+                :key="collumn.id"
                 :defaultCollumn="collumn"
                 :deskId="desk.id"
             ></desk-collumn>
