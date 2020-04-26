@@ -1,10 +1,13 @@
 export default {
     namespaced: true,
     state: {
-
+        dragging : false,
+        draggableCollumn : null
     },
     mutations: {
-
+        startDragging: state => state.dragging = true,
+        endDragging: state => state.dragging = false,
+        setDraggableCollumn: (state, draggableCollumn) => state.draggableCollumn = draggableCollumn,
     },
     getters: {
 
@@ -29,6 +32,15 @@ export default {
                     .then( response => {
                         return response.data;
                     });
+        },
+        async updateCollumnOrdering({} , { deskId, newCollumnsOrdering }) {
+            return axios
+                .put(`/api/kanban/desk/${deskId}/collumn/reorder`, {
+                    order : newCollumnsOrdering
+                })
+                .then( response => {
+                    return response.data;
+                });
         }
     },
 }

@@ -91,7 +91,9 @@ class CollumnController extends Controller
                     $collumn->save();
                 }
             }
-            return true;
+            return response([
+                'status' => true
+            ]);
         } catch (\Exception $e) {
             return response('', 404);
         }

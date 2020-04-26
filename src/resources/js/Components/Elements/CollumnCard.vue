@@ -1,5 +1,8 @@
 <template>
-    <div class="collumn-card">
+    <div
+        class="collumn-card"
+        draggable="true"
+    >
         <div class="collumn-card__header">
             {{ card.name }}
         </div>
