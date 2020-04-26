@@ -48,7 +48,7 @@ class CardController extends Controller
             $card->collumn()->associate($collumn);
             $card->user()->associate(Auth::user());
             return response([
-                'status' => $card->save()
+                'status' => (bool)$card->save()
             ]);
         } catch (\Exception $e) {
             return response('', 404);

@@ -18,7 +18,7 @@
                         <transition name="fade">
                             <template v-if="submitted">
                                 <div class="error" v-if="!$v.name.required">Name is required</div>
-                                <div class="error" v-if="!$v.name.maxLength">Name is too long. Maxlength is 225 chars</div>
+                                <div class="error" v-if="!$v.name.maxLength">Name is too long. Max length is 225 chars</div>
                                 <div class="error" v-for="error in nameServerErrors">{{ error }}</div>
                             </template>
                         </transition>
@@ -28,7 +28,7 @@
                     <div class="form-group form-group_with-textarea" :class="{ 'form-group--error': $v.description.$error }">
                         <transition name="fade">
                             <template v-if="submitted">
-                                <div class="error" v-if="!$v.description.maxLength">Description is too long. Maxlength is 60000 chars</div>
+                                <div class="error" v-if="!$v.description.maxLength">Description is too long. Max length is 60000 chars</div>
                                 <div class="error" v-for="error in descriptionServerErrors">{{ error }}</div>
                             </template>
                         </transition>

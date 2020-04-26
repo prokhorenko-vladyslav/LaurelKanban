@@ -11,13 +11,13 @@ use Laurel\Kanban\App\Http\Requests\Collumn\Update;
 use Laurel\Kanban\App\Http\Requests\Collumn\Destroy;
 use Laurel\Kanban\App\Http\Requests\Collumn\Reorder;
 use Laurel\Kanban\App\Http\Requests\Collumn\Show;
-use Laurel\Kanban\App\Http\Resources\Collumn\Resource;
+use Laurel\Kanban\App\Http\Resources\CollumnResource;
 use Laurel\Kanban\App\Models\Collumn;
 use Laurel\Kanban\App\Kanban;
 
 class CollumnController extends Controller
 {
-    public function index(CollumnIndex $request, int $deskId)
+    public function index(Index $request, int $deskId)
     {
         try {
             $collumns = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->with('cards')->get();
@@ -27,7 +27,7 @@ class CollumnController extends Controller
         return CollumnResource::collection($collumns);
     }
 
-    public function show(CollumnShow $request, int $deskId, int $collumnId)
+    public function show(Show $request, int $deskId, int $collumnId)
     {
         try {
             return new CollumnResource(
@@ -38,7 +38,7 @@ class CollumnController extends Controller
         }
     }
 
-    public function store(CollumnStore $request, int $deskId)
+    public function store(Store $request, int $deskId)
     {
         try {
             $desk = Kanban::getUserDesks()->findOrFail($deskId);
@@ -51,18 +51,20 @@ class CollumnController extends Controller
         }
     }
 
-    public function update(CollumnUpdate $request, int $deskId, int $collumnId)
+    public function update(Update $request, int $deskId, int $collumnId)
     {
         try {
             $collumn = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->findOrFail($collumnId);
             $collumn->fill($request->validated());
-            return (bool)$collumn->save();
+            return response([
+                'status' => (bool)$collumn->save()
+            ]);
         } catch (\Exception $e) {
             return response('', 404);
         }
     }
 
-    public function destroy(CollumnDestroy $request, int $deskId, int $collumnId)
+    public function destroy(Destroy $request, int $deskId, int $collumnId)
     {
         try {
             $collumn = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->findOrFail($collumnId);
@@ -73,7 +75,7 @@ class CollumnController extends Controller
         }
     }
 
-    public function reorder(CollumnReorder $request, int $deskId)
+    public function reorder(Reorder $request, int $deskId)
     {
         try {
             $desk = Kanban::getUserDesks()->findOrFail($deskId);

@@ -1,7 +1,27 @@
 <template>
     <div class="collumn">
-        <div class="collumn__header">
-            <div class="collumn__header__name">{{ collumn.name }}</div>
+        <div class="collumn__header form">
+            <transition name="fade">
+                <template v-if="edit && submitted">
+                    <div class="error" v-if="!$v.newName.required">Name is required</div>
+                    <div class="error" v-if="!$v.newName.maxLength">Name is too long. Max length is 225 chars</div>
+                    <div class="error" v-for="error in newNameServerErrors">{{ error }}</div>
+                    <div class="error" v-for="error in serverErrors">{{ error }}</div>
+                </template>
+            </transition>
+            <div
+                class="collumn__header__name"
+                v-if="!edit"
+                @click="startEdit"
+            >{{ collumn.name }}</div>
+            <div class="form-group" :class="{ 'form-group--error': $v.newName.$error }" v-else>
+                <input
+                    class="collumn__header__input form__input"
+                    type="text"
+                    v-model.trim="$v.newName.$model"
+                    @keypress.enter="saveName"
+                >
+            </div>
         </div>
         <div class="collumn__body">
             <collumn-card
@@ -28,6 +48,9 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
+    import {maxLength, required} from "vuelidate/lib/validators";
+
     export default {
         name: "DeskCollumn",
         props: {
@@ -43,8 +66,19 @@
         data() {
             return {
                 isAddingNewCard : false,
-                collumn : this.defaultCollumn
+                collumn : this.defaultCollumn,
+                edit : false,
+                submitted : false,
+                newNameServerErrors : null,
+                serverErrors : null,
+                newName : this.defaultCollumn.name
             }
+        },
+        validations: {
+            newName: {
+                required,
+                maxLength: maxLength(225),
+            },
         },
         computed: {
             sortedCards() {
@@ -56,6 +90,7 @@
             }
         },
         methods: {
+            ...mapActions('Collumn', ['updateCollumn']),
             addNewCard() {
                 this.isAddingNewCard = true;
             },
@@ -65,12 +100,43 @@
             addNewCardToCollumn(newCard) {
                 this.collumn.cards.push(newCard);
                 this.closeNewCardModal();
+            },
+            startEdit() {
+                this.edit = true;
+            },
+            endEdit() {
+                this.edit = false;
+            },
+            async saveName() {
+                this.submitted = true;
+
+                if (!this.$v.$invalid) {
+                    let response = await this.updateCollumn({
+                        name: this.newName,
+                        order : this.collumn.order,
+                        deskId : this.deskId,
+                        collumnId : this.collumn.id,
+                    });
+
+                    if (response.status) {
+                        this.collumn.name = this.newName;
+                        this.endEdit();
+                    } else {
+                        if (response.errors.name) {
+                            this.newNameServerErrors = response.errors.name;
+                        } else {
+                            this.serverErrors = response.errors;
+                        }
+                    }
+                }
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    @import "./packages/laurel/kanban/src/resources/scss/form";
+
     .collumn {
         height: max-content;
         width: 15rem;
@@ -84,6 +150,18 @@
 
         .collumn__header {
             margin-bottom: 1rem;
+
+            &.form {
+                padding: 0;
+
+                .form-group {
+                    margin-top: 0;
+
+                    .form__input {
+                        padding: .3rem 1rem;
+                    }
+                }
+            }
 
             .collumn__header__name {
                 color: #475F7B;
