@@ -3,11 +3,16 @@
         <page-header></page-header>
         <div class="single-desk-content" v-if="desk">
             <desk-collumn
-                v-for="collumn in desk.collumns"
+                v-for="collumn in sortedCollumns"
                 :key="collumn.id"
                 :defaultCollumn="collumn"
                 :deskId="desk.id"
             ></desk-collumn>
+            <new-desk-collumn
+                :deskId="desk.id"
+                :order="nextOrderIndex"
+                @adding-new-collumn="addNewCollumn"
+            ></new-desk-collumn>
         </div>
     </div>
 </template>
@@ -34,6 +39,15 @@
             else
                 alert('Desk has not been loaded');
         },
+        computed: {
+            sortedCollumns() {
+                return this.desk.collumns.sort((firstCollumn, secondCollumn) => firstCollumn.order > secondCollumn.order);
+            },
+            nextOrderIndex() {
+                let sortedCollumns = this.sortedCollumns;
+                return sortedCollumns.length ? sortedCollumns[sortedCollumns.length - 1].order + 1 : 0;
+            }
+        },
         watch: {
             async $route (to, from) {
                 await this.init();
@@ -46,6 +60,9 @@
             pushToLoginPage() {
                 this.$router.push({ name: 'kanban.login' });
             },
+            addNewCollumn(newCollumn) {
+                this.desk.collumns.push(newCollumn);
+            }
         }
     }
 </script>
@@ -63,6 +80,14 @@
             display: flex;
             padding: 0 2rem 2rem 2rem;
             height: 92%;
+            overflow-y: auto;
+
+            &:after {
+                content: '';
+                display: block;
+                height: 100%;
+                min-width: 2rem;
+            }
         }
     }
 </style>

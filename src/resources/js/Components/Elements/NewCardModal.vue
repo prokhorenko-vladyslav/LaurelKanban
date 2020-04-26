@@ -103,7 +103,7 @@
                     if (response.status) {
                         return this.$emit('adding-new-card', {
                             name : this.name,
-                            description : this.description,
+                            description : this.description || '',
                             order : this.order,
                         })
                     } else {

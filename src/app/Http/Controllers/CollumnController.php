@@ -45,7 +45,12 @@ class CollumnController extends Controller
             $collumn = new Collumn;
             $collumn->fill($request->validated());
             $collumn->desk()->associate($desk);
-            return (bool)$collumn->save();
+            return response([
+                'status' => (bool)$collumn->save(),
+                'data' => [
+                    'id' => $collumn->id
+                ]
+            ]);
         } catch (\Exception $e) {
             return response('', 404);
         }

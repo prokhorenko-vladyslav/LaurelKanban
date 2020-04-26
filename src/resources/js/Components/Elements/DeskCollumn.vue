@@ -139,7 +139,8 @@
 
     .collumn {
         height: max-content;
-        width: 15rem;
+        min-width: 16rem;
+        max-height: 100%;
         margin: 0 1.5rem;
         padding: 1rem;
         overflow-x: hidden;
@@ -170,6 +171,8 @@
         }
 
         .collumn__body {
+            margin-bottom: 2rem;
+
             .new-card-button {
                 width: 100%;
                 padding: .3rem;
