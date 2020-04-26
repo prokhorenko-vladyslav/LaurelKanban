@@ -83,7 +83,6 @@
                         this.$emit('adding-new-collumn', {
                             id : response.data.id,
                             name : this.name,
-                            order : this.order,
                             cards : []
                         });
                         this.endEdit();
@@ -104,7 +103,6 @@
     .collumn {
         height: max-content;
         min-width: 15rem;
-        margin: 0 1.5rem;
         padding: 1rem;
         overflow-x: hidden;
         overflow-y: auto;

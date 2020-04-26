@@ -1,12 +1,6 @@
 <template>
     <div
         class="collumn"
-        draggable="true"
-        @drag="dragStart"
-        @dragover.prevent
-        @dragenter.prevent="reorderCollumns"
-        @dragleave.prevent="dragStop"
-        @drop.prevent="updateOrdering"
     >
         <div class="collumn__content">
             <div class="collumn__header form">
@@ -154,7 +148,7 @@
                 this.setDraggableCollumn(null);
                 this.endDragging();
             },
-            reorderCollumns(event) {
+            /*reorderCollumns(event) {
                 event.stopPropagation();
                 if (this.dragging && this.draggableCollumn && this.draggableCollumn.id !== this.collumn.id) {
                     this.$emit('reorder-collumns', this.draggableCollumn.id, this.collumn.id);
@@ -163,7 +157,7 @@
             updateOrdering() {
                 this.$emit('save-ordering');
                 this.dragStop();
-            }
+            }*/
         }
     }
 </script>

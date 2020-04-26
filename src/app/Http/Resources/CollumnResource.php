@@ -17,7 +17,7 @@ class CollumnResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'order' => $this->order,
+//            'order' => $this->order,
             'cards' => CardShortResource::collection($this->whenLoaded('cards'))
         ];
     }
