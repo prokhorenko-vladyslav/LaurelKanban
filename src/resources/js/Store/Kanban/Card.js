@@ -21,6 +21,15 @@ export default {
                 .then( response => {
                     return response.data;
                 });
+        },
+        async updateCardsOrdering({}, { newCardsOrdering, deskId, collumnId }) {
+            return axios
+                .put(`/api/kanban/desk/${deskId}/collumn/${collumnId}/card/reorder`, {
+                    order : newCardsOrdering
+                })
+                .then( response => {
+                    return response.data;
+                });
         }
     },
 }

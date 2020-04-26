@@ -15,7 +15,7 @@ class Desk extends Model
 
     public function cards()
     {
-        return $this->hasManyThrough(Card::class, Collumn::class)->orderBy('order');
+        return $this->hasMany(Card::class)->orderBy('order');
     }
 
     public function user()

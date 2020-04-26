@@ -27,11 +27,18 @@
                 </div>
             </div>
             <div class="collumn__body">
-                <collumn-card
-                    v-for="card in sortedCards"
-                    :key="card.id"
-                    :card="card"
-                ></collumn-card>
+                <draggable
+                    :list="collumn.cards"
+                    v-bind="dragOptions"
+                >
+                    <transition-group class="single-desk__collumns">
+                        <collumn-card
+                            v-for="card in collumn.cards"
+                            :key="card.id"
+                            :card="card"
+                        ></collumn-card>
+                    </transition-group>
+                </draggable>
                 <button
                     class="new-card-button"
                     @click="addNewCard"
@@ -48,9 +55,6 @@
                 ></new-card-modal>
             </transition>
         </div>
-        <div
-            class="collumn__drag-element"
-        ></div>
     </div>
 </template>
 
@@ -88,18 +92,39 @@
             },
         },
         computed: {
-            ...mapState('Collumn', ['dragging', 'draggableCollumn']),
-            sortedCards() {
-                return this.collumn.cards.sort((firstCard, secondCard) => firstCard.order > secondCard.order);
-            },
             nextOrderIndex() {
-                let sortedCards = this.sortedCards;
-                return sortedCards.length ? sortedCards[sortedCards.length - 1].order + 1 : 0;
+                return this.collumn.cards.length;
+            },
+            dragOptions() {
+                return {
+                    animation: 100,
+                    group: "cards",
+                    ghostClass: "ghost",
+                    emptyInsertThreshold : 100
+                };
+            }
+        },
+        watch: {
+            'collumn.cards' : async function() {
+                let newCardsOrdering = {};
+
+                for (let i = 0; i < this.collumn.cards.length; i++) {
+                    newCardsOrdering[this.collumn.cards[i].id] = i;
+                }
+
+                if (Object.keys(newCardsOrdering).length) {
+                    let response = await this.updateCardsOrdering({
+                        deskId : this.deskId,
+                        collumnId : this.collumn.id,
+                        newCardsOrdering,
+                    });
+                }
             }
         },
         methods: {
             ...mapMutations('Collumn', ['startDragging', 'endDragging', 'setDraggableCollumn']),
             ...mapActions('Collumn', ['updateCollumn']),
+            ...mapActions('Card', ['updateCardsOrdering']),
             addNewCard() {
                 this.isAddingNewCard = true;
             },
@@ -138,26 +163,7 @@
                         }
                     }
                 }
-            },
-            dragStart(event) {
-                event.stopPropagation();
-                this.setDraggableCollumn(this.collumn);
-                this.startDragging();
-            },
-            dragStop() {
-                this.setDraggableCollumn(null);
-                this.endDragging();
-            },
-            /*reorderCollumns(event) {
-                event.stopPropagation();
-                if (this.dragging && this.draggableCollumn && this.draggableCollumn.id !== this.collumn.id) {
-                    this.$emit('reorder-collumns', this.draggableCollumn.id, this.collumn.id);
-                }
-            },
-            updateOrdering() {
-                this.$emit('save-ordering');
-                this.dragStop();
-            }*/
+            }
         }
     }
 </script>

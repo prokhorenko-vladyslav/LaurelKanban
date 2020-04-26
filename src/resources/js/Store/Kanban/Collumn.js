@@ -1,16 +1,9 @@
 export default {
     namespaced: true,
-    state: {
-        dragging : false,
-        draggableCollumn : null
-    },
     mutations: {
         startDragging: state => state.dragging = true,
         endDragging: state => state.dragging = false,
         setDraggableCollumn: (state, draggableCollumn) => state.draggableCollumn = draggableCollumn,
-    },
-    getters: {
-
     },
     actions: {
         async addCollumn({ commit }, { name, order, deskId }) {

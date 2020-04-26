@@ -6,6 +6,7 @@
                 :list="desk.collumns"
                 v-bind="dragOptions"
                 @change="saveOrdering"
+                draggable=".collumn"
             >
                 <transition-group class="single-desk__collumns">
                     <desk-collumn
@@ -54,7 +55,7 @@
             },
             dragOptions() {
                 return {
-                    animation: 500,
+                    animation: 200,
                     group: "collumns",
                     ghostClass: "ghost"
                 };
@@ -64,7 +65,7 @@
             async $route (to, from) {
                 await this.init();
                 await this.loadDesk(this.$route.params.desk);
-            }
+            },
         },
         methods: {
             ...mapActions('Auth', ['isAuth', 'init']),

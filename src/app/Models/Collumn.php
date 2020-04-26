@@ -3,6 +3,7 @@
 namespace Laurel\Kanban\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Collumn extends Model
 {
@@ -14,7 +15,7 @@ class Collumn extends Model
         return $this->belongsTo(Desk::class);
     }
 
-    public function cards()
+    public function cards() : HasMany
     {
         return $this->hasMany(Card::class)->orderBy('order');
     }

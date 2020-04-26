@@ -10,7 +10,7 @@ class Card extends Model
 
     public function desk()
     {
-        return $this->newHasOneThrough(Desk::class, Collumn::class);
+        return $this->belongsTo(Desk::class);
     }
 
     public function collumn()

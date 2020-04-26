@@ -18,6 +18,7 @@ class CreateCardsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('order')->default(0);
+            $table->foreignId('desk_id')->nullable();
             $table->foreignId('collumn_id')->nullable();
             $table->foreignId('user_id')->nullable();
             $table->timestamps();

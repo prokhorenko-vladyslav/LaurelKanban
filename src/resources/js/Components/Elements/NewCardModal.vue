@@ -102,6 +102,7 @@
 
                     if (response.status) {
                         return this.$emit('adding-new-card', {
+                            id : response.data.id,
                             name : this.name,
                             description : this.description || '',
                             order : this.order,

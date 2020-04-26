@@ -15,6 +15,7 @@ use Laurel\Kanban\App\Http\Resources\Card\Resource;
 use Laurel\Kanban\App\Http\Resources\Card\ShortResource;
 use Laurel\Kanban\App\Kanban;
 use Laurel\Kanban\App\Models\Card;
+use Laurel\Kanban\App\Models\Collumn;
 
 class CardController extends Controller
 {
@@ -42,13 +43,19 @@ class CardController extends Controller
     public function store(Store $request, int $deskId)
     {
         try {
-            $collumn = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->findOrFail($request->validated()['collumn_id']);
+            $desk = Kanban::getUserDesks()->findOrFail($deskId);
+            $collumn = $desk->collumns()->findOrFail($request->validated()['collumn_id']);
             $card = new Card;
             $card->fill($request->validated());
+            $card->desk()->associate($desk);
             $card->collumn()->associate($collumn);
             $card->user()->associate(Auth::user());
+
             return response([
-                'status' => (bool)$card->save()
+                'status' => (bool)$card->save(),
+                'data' => [
+                    'id' => $card->id
+                ]
             ]);
         } catch (\Exception $e) {
             return response('', 404);
@@ -86,10 +93,16 @@ class CardController extends Controller
     public function reorder(Reorder $request, int $deskId, int $collumnId)
     {
         try {
-            $collumn = Kanban::getUserDesks()->findOrFail($deskId)->collumns()->findOrFail($collumnId);
+            $desk = Kanban::getUserDesks()->findOrFail($deskId);
+            $collumn = $desk->collumns()->findOrFail($collumnId);
+            $collumn->cards()->each(function (Card $card) {
+                  $card->collumn()->dissociate();
+                  $card->save();
+            });
             foreach ($request->validated()['order'] as $cardId => $order) {
-                $card = $collumn->cards()->find($cardId);
+                $card = $desk->cards()->find($cardId);
                 if ($card) {
+                    $card->collumn()->associate($collumn);
                     $card->order = $order;
                     $card->save();
                 }
