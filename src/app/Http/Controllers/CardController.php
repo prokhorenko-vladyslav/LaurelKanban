@@ -47,7 +47,9 @@ class CardController extends Controller
             $card->fill($request->validated());
             $card->collumn()->associate($collumn);
             $card->user()->associate(Auth::user());
-            return (bool)$card->save();
+            return response([
+                'status' => $card->save()
+            ]);
         } catch (\Exception $e) {
             return response('', 404);
         }

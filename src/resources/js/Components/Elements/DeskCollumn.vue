@@ -5,12 +5,25 @@
         </div>
         <div class="collumn__body">
             <collumn-card
-                v-for="card in collumn.cards"
+                v-for="card in sortedCards"
                 :key="card.id"
                 :card="card"
             ></collumn-card>
-            <button class="new-card-button">+Add new card</button>
+            <button
+                class="new-card-button"
+                @click="addNewCard"
+            >+Add new card</button>
         </div>
+        <transition name="fade">
+            <new-card-modal
+                v-if="isAddingNewCard"
+                :collumnId="collumn.id"
+                :deskId="deskId"
+                :order="this.nextOrderIndex"
+                @adding-new-card="addNewCardToCollumn"
+                @close="closeNewCardModal"
+            ></new-card-modal>
+        </transition>
     </div>
 </template>
 
@@ -18,21 +31,41 @@
     export default {
         name: "DeskCollumn",
         props: {
-            collumn : {
+            defaultCollumn : {
                 type : Object,
+                required : true
+            },
+            deskId : {
+                type : Number,
                 required : true
             }
         },
-        async created() {
-
+        data() {
+            return {
+                isAddingNewCard : false,
+                collumn : this.defaultCollumn
+            }
         },
-        watch: {
-            async $route (to, from) {
-
+        computed: {
+            sortedCards() {
+                return this.collumn.cards.sort((firstCard, secondCard) => firstCard.order > secondCard.order);
+            },
+            nextOrderIndex() {
+                let sortedCards = this.sortedCards;
+                return sortedCards.length ? sortedCards[sortedCards.length - 1].order + 1 : 0;
             }
         },
         methods: {
-
+            addNewCard() {
+                this.isAddingNewCard = true;
+            },
+            closeNewCardModal() {
+                this.isAddingNewCard = false;
+            },
+            addNewCardToCollumn(newCard) {
+                this.collumn.cards.push(newCard);
+                this.closeNewCardModal();
+            }
         }
     }
 </script>

@@ -119,6 +119,7 @@
 
 <style lang='scss'>
     @import "./packages/laurel/kanban/src/resources/scss/page";
+    @import "./packages/laurel/kanban/src/resources/scss/form";
 
     .page {
         &#login {

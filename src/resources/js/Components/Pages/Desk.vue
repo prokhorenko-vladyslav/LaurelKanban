@@ -5,7 +5,8 @@
             <desk-collumn
                 v-for="collumn in desk.collumns"
                 :key="desk.id"
-                :collumn="collumn"
+                :defaultCollumn="collumn"
+                :deskId="desk.id"
             ></desk-collumn>
         </div>
     </div>
