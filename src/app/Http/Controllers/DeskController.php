@@ -37,7 +37,12 @@ class DeskController extends Controller
         $desk = new Desk;
         $desk->fill($request->validated());
         $desk->user()->associate(Auth::user());
-        return (bool)$desk->save();
+        return response([
+            'status' => (bool)$desk->save(),
+            'data' => [
+                'id' => $desk->id
+            ]
+        ]);
     }
 
     public function update(Update $request, int $deskId)

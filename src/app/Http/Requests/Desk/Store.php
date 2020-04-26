@@ -25,7 +25,7 @@ class Store extends FormRequest
     {
         return [
             'name' => 'required|unique:desks,name|string|max:255',
-            'description' => 'string|max:1000',
+            'description' => 'nullable|string|max:1000',
             'is_favorite' => 'boolean',
             'is_private' => 'boolean'
         ];

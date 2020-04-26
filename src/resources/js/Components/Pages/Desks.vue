@@ -7,7 +7,17 @@
                 :key="desk.id"
                 :desk="desk"
             ></desk-component>
+            <new-desk
+                @adding-new-desk="showNewDeskModal"
+            ></new-desk>
         </div>
+
+        <transition name="fade">
+            <new-desk-modal
+                v-if="isAddingNewDesk"
+                @close="closeNewDeskModal"
+            ></new-desk-modal>
+        </transition>
     </div>
 </template>
 
@@ -18,7 +28,7 @@
         name: "Desks",
         data() {
             return {
-
+                isAddingNewDesk : false
             }
         },
         computed: {
@@ -41,21 +51,31 @@
         },
         methods: {
             ...mapActions('Auth', ['isAuth', 'init']),
-            ...mapActions('Desk', ['loadDesks']),
+            ...mapActions('Desk', ['loadDesks', 'addDesk']),
             pushToLoginPage() {
                 this.$router.push({ name: 'kanban.login' });
             },
+            showNewDeskModal() {
+                this.isAddingNewDesk = true;
+            },
+            closeNewDeskModal() {
+                this.isAddingNewDesk = false;
+            }
         }
     }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
     #desks {
         z-index: 3;
 
         .desks__list {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
     }
 </style>

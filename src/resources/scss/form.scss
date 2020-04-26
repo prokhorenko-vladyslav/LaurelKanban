@@ -24,6 +24,11 @@
             margin-top: .5rem;
         }
 
+        &.row {
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
         .form__link {
             color: #0e63f4;
             text-decoration: none;
@@ -74,6 +79,53 @@
 
             &:hover {
                 box-shadow: 0px 5px 20px 6px rgb(175, 193, 231);
+            }
+        }
+
+        .form__checkbox__label {
+            display: flex;
+            flex-direction: column;
+
+            .form__checkbox {
+                display: none;
+
+                & + .checkbox__text {
+                    transition: all .3s ease-in-out;
+                }
+
+                & + .checkbox__text + .checkbox__wrapper {
+                    position: relative;
+                    display: block;
+                    width: 3.5rem;
+                    height: 1.25rem;
+                    padding: .1rem;
+                    border-radius: 1rem;
+                    background: rgba(0, 0, 0, 0.1);
+                    cursor: pointer;
+
+                    .checkbox__ball {
+                        position: absolute;
+                        left: .15rem;
+                        top: .125rem;
+                        display: block;
+                        width: 1rem;
+                        height: 1rem;
+                        border-radius: 50%;
+                        background: rgba(0, 0, 0, .2);
+                        transition: all .3s ease-in-out;
+                    }
+                }
+
+                &:checked + .checkbox__text {
+                    color: #7ba3f1;
+                }
+
+                &:checked + .checkbox__text + .checkbox__wrapper {
+                    .checkbox__ball {
+                        left: calc(100% - 1.15rem);
+                        background: #7ba3f1;
+                    }
+                }
             }
         }
     }

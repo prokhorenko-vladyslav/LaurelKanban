@@ -18,7 +18,6 @@
                 </transition-group>
             </draggable>
             <new-desk-collumn
-                v-if="desk"
                 :deskId="desk.id"
                 :order="nextOrderIndex"
                 @adding-new-collumn="addNewCollumn"

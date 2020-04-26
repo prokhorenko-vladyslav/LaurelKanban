@@ -5,9 +5,7 @@ export default {
     },
     mutations: {
         setDesks: (state, desks) => state.desks = desks,
-    },
-    getters: {
-
+        pushNewDesk : (state, desk) => state.desks.push(desk),
     },
     actions: {
         async loadDesks({ commit }) {
@@ -25,6 +23,36 @@ export default {
                         return response.data.data;
                     else
                         return false;
+                })
+        },
+        addDesk({ commit }, { name, description, isFavorite, isPrivate }) {
+            return axios
+                .post(`/api/kanban/desk`, {
+                    name,
+                    description,
+                    isFavorite,
+                    isPrivate
+                })
+                .then( response => {
+                    if (response.data.status) {
+                        commit('pushNewDesk', {
+                            id : response.data.data.id,
+                            name,
+                            description,
+                            isFavorite,
+                            isPrivate
+                        });
+                    }
+
+                    return response.data;
+                })
+                .catch( error => {
+                    if (error.response.data.errors) {
+                        return {
+                            status : false,
+                            errors : error.response.data.errors,
+                        }
+                    }
                 })
         }
     },
